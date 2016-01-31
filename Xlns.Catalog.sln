@@ -1,0 +1,54 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xlns.Catalog.Core", "Xlns.Catalog.Core\Xlns.Catalog.Core.csproj", "{93687C33-F283-4010-8090-E2A87B98897E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{FD0321C1-4DE7-478F-A7CE-C3BFA7390F5B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xlns.Catalog.Core.Test", "Xlns.Catalog.Core.Test\Xlns.Catalog.Core.Test.csproj", "{AC929D93-9BA3-49E4-A1F8-9FDCF2269489}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExtLib", "ExtLib", "{9AC7A842-424E-49C2-9127-4DBF6E038BA7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xlns.Catalog.Admin", "Xlns.Catalog.Admin\Xlns.Catalog.Admin.csproj", "{69535D42-75B9-4293-969C-1C7056D3B7ED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspinia_MVC5", "..\..\Temp\products-WB0R5L90S\MVC5_Full_Version\Inspinia_MVC5\Inspinia_MVC5.csproj", "{A5859E0E-3C08-4045-B8DC-B3FB13655B00}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExampleProjects", "ExampleProjects", "{76C13106-B614-4D03-A088-437C370A542B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xlns.Catalog.Document", "Xlns.Catalog.Document\Xlns.Catalog.Document.csproj", "{E215CCD5-0A0E-4F6A-912B-D8173941F1E3}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{93687C33-F283-4010-8090-E2A87B98897E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{93687C33-F283-4010-8090-E2A87B98897E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{93687C33-F283-4010-8090-E2A87B98897E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{93687C33-F283-4010-8090-E2A87B98897E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC929D93-9BA3-49E4-A1F8-9FDCF2269489}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC929D93-9BA3-49E4-A1F8-9FDCF2269489}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC929D93-9BA3-49E4-A1F8-9FDCF2269489}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC929D93-9BA3-49E4-A1F8-9FDCF2269489}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69535D42-75B9-4293-969C-1C7056D3B7ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69535D42-75B9-4293-969C-1C7056D3B7ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69535D42-75B9-4293-969C-1C7056D3B7ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69535D42-75B9-4293-969C-1C7056D3B7ED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A5859E0E-3C08-4045-B8DC-B3FB13655B00}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A5859E0E-3C08-4045-B8DC-B3FB13655B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A5859E0E-3C08-4045-B8DC-B3FB13655B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A5859E0E-3C08-4045-B8DC-B3FB13655B00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E215CCD5-0A0E-4F6A-912B-D8173941F1E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E215CCD5-0A0E-4F6A-912B-D8173941F1E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E215CCD5-0A0E-4F6A-912B-D8173941F1E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E215CCD5-0A0E-4F6A-912B-D8173941F1E3}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{AC929D93-9BA3-49E4-A1F8-9FDCF2269489} = {FD0321C1-4DE7-478F-A7CE-C3BFA7390F5B}
+		{A5859E0E-3C08-4045-B8DC-B3FB13655B00} = {76C13106-B614-4D03-A088-437C370A542B}
+	EndGlobalSection
+EndGlobal
