@@ -19,16 +19,25 @@ namespace Xlns.Catalog.Admin.Controllers
 
         public ActionResult Create()
         {
-            return View();
+            ViewBag.CurrentActionName = "Create";
+            return View("Edit");
+        }
+
+        public ActionResult Edit(string Id)
+        {
+            if (string.IsNullOrEmpty(Id)) return RedirectToAction("Create");
+            ViewBag.CurrentActionName = "Edit";
+            var documentRepository = new DocumentRepository();
+            var merchant = documentRepository.Load<Merchant>(Id);
+            return View("Edit", merchant);
         }
 
         [HttpPost]
-        public ActionResult QuickCreate(Merchant merchant)
+        public ActionResult Save(Merchant merchant)
         {
             if (ModelState.IsValid)
             {
-                var documentRepository = new DocumentRepository();
-                merchant.GenerateId();
+                var documentRepository = new DocumentRepository();                
                 documentRepository.Save(merchant);
             }
             return RedirectToAction("Create");

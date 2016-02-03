@@ -7,8 +7,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{FD0321C1-4
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xlns.Catalog.Core.Test", "Xlns.Catalog.Core.Test\Xlns.Catalog.Core.Test.csproj", "{AC929D93-9BA3-49E4-A1F8-9FDCF2269489}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ExtLib", "ExtLib", "{9AC7A842-424E-49C2-9127-4DBF6E038BA7}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Xlns.Catalog.Admin", "Xlns.Catalog.Admin\Xlns.Catalog.Admin.csproj", "{69535D42-75B9-4293-969C-1C7056D3B7ED}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Inspinia_MVC5", "..\..\Temp\products-WB0R5L90S\MVC5_Full_Version\Inspinia_MVC5\Inspinia_MVC5.csproj", "{A5859E0E-3C08-4045-B8DC-B3FB13655B00}"

@@ -9,7 +9,7 @@ namespace Xlns.Catalog.Document.Model
 {
     public class ProductItem
     {
-        public Merchant Merchant { get; set; }
+        public ProductMerchant Merchant { get; set; }
         public DateTime Created { get; set; }
         public DateTime Updated { get; set; }
 

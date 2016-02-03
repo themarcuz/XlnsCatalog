@@ -14,9 +14,17 @@ namespace Xlns.Catalog.Document.Repository
         public void Save<T>(T document) 
         {
             using (IDocumentSession session = DataDocumentStore.Instance.OpenSession())
-            {
+            {                
                 session.Store(document);
                 session.SaveChanges();
+            }
+        }
+
+        public T Load<T>(string Id)
+        {
+            using (IDocumentSession session = DataDocumentStore.Instance.OpenSession())
+            {
+                return session.Load<T>(Id);                
             }
         }
     }

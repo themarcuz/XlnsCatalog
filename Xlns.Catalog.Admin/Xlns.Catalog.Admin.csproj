@@ -1606,7 +1606,7 @@
     <Content Include="Scripts\plugins\chartist\chartist.min.js.map" />
     <Content Include="Views\Dashboard\Browse.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
-    <Content Include="Views\Merchant\Create.cshtml" />
+    <Content Include="Views\Merchant\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xlns.Catalog.Core\Xlns.Catalog.Core.csproj">
