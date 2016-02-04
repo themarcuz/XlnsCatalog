@@ -1,0 +1,30 @@
+﻿@using Xlns.Catalog.Document.Model;
+@model IList<Xlns.Catalog.Document.Model.Merchant>
+@{
+    ViewBag.Title = "Merchants list";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-9">
+        <h2>Merchants</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Dashboard")">Home</a>
+            </li>
+            <li>
+                Merchant
+            </li>
+            <li class="active">
+                <strong>List</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        @foreach (var merchant in Model)
+        {
+            @Html.DisplayFor(modelItem => merchant, "MerchantTile")
+        }
+    </div>
+</div>

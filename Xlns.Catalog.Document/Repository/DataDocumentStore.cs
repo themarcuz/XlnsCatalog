@@ -18,7 +18,7 @@ namespace Xlns.Catalog.Document.Repository
             {
                 if (instance == null)
                     throw new InvalidOperationException(
-                      "IDocumentStore has not been initialized.");
+                      "DataDocumentStore has not been initialized.");
                 return instance;
             }
         }
@@ -28,6 +28,29 @@ namespace Xlns.Catalog.Document.Repository
             instance = new DocumentStore { ConnectionStringName = "RavenDB" };
             //instance.Conventions.IdentityPartsSeparator = "-";
             instance.Initialize();            
+        }
+    }
+
+    public class StagingDocumentStore
+    {
+        private static IDocumentStore instance;
+
+        public static IDocumentStore Instance
+        {
+            get
+            {
+                if (instance == null)
+                    throw new InvalidOperationException(
+                      "StagingDocumentStore has not been initialized.");
+                return instance;
+            }
+        }
+
+        public static void Initialize()
+        {
+            instance = new DocumentStore { ConnectionStringName = "StagingRavenDB"};
+            //instance.Conventions.IdentityPartsSeparator = "-";
+            instance.Initialize();
         }
     }
 }

@@ -11,9 +11,14 @@ namespace Xlns.Catalog.Document.Repository
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        protected virtual IDocumentSession OpenSession() 
+        {
+            return DataDocumentStore.Instance.OpenSession();
+        }
+
         public void Save<T>(T document) 
         {
-            using (IDocumentSession session = DataDocumentStore.Instance.OpenSession())
+            using (IDocumentSession session = OpenSession())
             {                
                 session.Store(document);
                 session.SaveChanges();
@@ -22,10 +27,32 @@ namespace Xlns.Catalog.Document.Repository
 
         public T Load<T>(string Id)
         {
-            using (IDocumentSession session = DataDocumentStore.Instance.OpenSession())
+            using (IDocumentSession session = OpenSession())
             {
                 return session.Load<T>(Id);                
             }
         }
+
+        public IList<T> LoadMany<T>(int itemsNumber, int pageNumber)
+        {
+            using (IDocumentSession session = OpenSession())
+            {
+                return session.Query<T>()
+                    .Skip(itemsNumber * (pageNumber-1))
+                    .Take(itemsNumber)
+                    .ToList();
+            }
+        }
     }
+
+    public class StagingDocumentRepository : DocumentRepository
+    {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        protected override IDocumentSession OpenSession()
+        {
+            return StagingDocumentStore.Instance.OpenSession();
+        }
+    }
+
 }

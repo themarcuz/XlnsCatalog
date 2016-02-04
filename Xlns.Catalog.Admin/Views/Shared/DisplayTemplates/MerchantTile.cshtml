@@ -1,0 +1,23 @@
+﻿@model Xlns.Catalog.Document.Model.Merchant
+
+<div class="col-lg-4">
+    <div class="contact-box">
+        <a href="@Url.Action("Edit", "Merchant", new { Id = Model.Id })">
+            <div class="col-sm-4">
+                <div class="text-center">
+                    <img alt="image" class="img-circle m-t-xs img-responsive" src="~/Images/a2.jpg">
+                </div>
+            </div>
+        </a>
+        <div class="col-sm-8">
+            <a href="@Url.Action("Edit", "Merchant", new { Id = Model.Id })">
+                <h3><strong>@Html.DisplayFor(m => Model.Name)</strong></h3>
+            </a>
+            <p><a href="@Model.Url" target="_blank">@Model.Url</a>&nbsp;</p>
+            <p>@Model.Description&nbsp;</p>
+            <p>@Html.DisplayFor(m => Model.Address)&nbsp;</p>
+        </div>
+        <div class="clearfix"></div>
+
+    </div>
+</div>

@@ -14,7 +14,16 @@ namespace Xlns.Catalog.Admin.Controllers
         // GET: /Merchant/
         public ActionResult Index()
         {
-            return View();
+            var documentRepository = new DocumentRepository();
+            var merchants = documentRepository.LoadMany<Merchant>(10, 1);
+            return View(merchants);
+        }
+
+        public ActionResult Detail(string Id)
+        {
+            var documentRepository = new DocumentRepository();
+            var merchant = documentRepository.Load<Merchant>(Id);
+            return View(merchant);
         }
 
         public ActionResult Create()

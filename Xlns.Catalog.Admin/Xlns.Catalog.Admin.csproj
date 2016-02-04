@@ -1607,6 +1607,9 @@
     <Content Include="Views\Dashboard\Browse.cshtml" />
     <Content Include="Views\Dashboard\Index.cshtml" />
     <Content Include="Views\Merchant\Edit.cshtml" />
+    <Content Include="Views\Merchant\Index.cshtml" />
+    <Content Include="Views\Shared\DisplayTemplates\MerchantTile.cshtml" />
+    <Content Include="Views\Merchant\Detail.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xlns.Catalog.Core\Xlns.Catalog.Core.csproj">
