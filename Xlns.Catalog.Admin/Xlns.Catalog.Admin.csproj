@@ -1610,6 +1610,9 @@
     <Content Include="Views\Merchant\Index.cshtml" />
     <Content Include="Views\Shared\DisplayTemplates\MerchantTile.cshtml" />
     <Content Include="Views\Merchant\Detail.cshtml" />
+    <Content Include="Views\Merchant\MerchantTile.cshtml" />
+    <Content Include="Views\Merchant\CreateCatalog.cshtml" />
+    <Content Include="Views\Catalog\ImportResult.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xlns.Catalog.Core\Xlns.Catalog.Core.csproj">

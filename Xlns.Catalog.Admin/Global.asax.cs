@@ -21,6 +21,7 @@ namespace Xlns.Catalog.Admin
 
             //Initialize RavenDB Document Store
             DataDocumentStore.Initialize();
+            StagingDocumentStore.Initialize();
         }
     }
 }

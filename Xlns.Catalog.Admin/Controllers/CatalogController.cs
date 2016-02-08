@@ -6,47 +6,48 @@ using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
 using System.Linq;
+using Xlns.Catalog.Document.Services;
 
 namespace Xlns.Catalog.Admin.Controllers
 {
     public class CatalogController : Controller
     {
-        //
-        // GET: /Task/
+
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public ActionResult Upload()
+        public ActionResult UploadFile()
         {
-            foreach (var fileKey in Request.Files.AllKeys)
+
+            var file = Request.Files["catalogFile"];
+
+            if (file != null)
             {
-                var file = Request.Files[fileKey];
-                try
-                {
-                    if (file != null)
-                    {
-                        var fileName = Path.GetFileName(file.FileName);
-                        var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
-                        file.SaveAs(path);
-                        var XmlDoc = XDocument.Load(new StreamReader(file.InputStream));
-                        var itemCount = XmlDoc.Element("rss").Element("channel").Elements("item").Count(); ;
-                        return Json(new { Message = string.Format("File saved: {0} items imported", itemCount) });
-                    }
-                }
-                catch (Exception ex)
-                {
-                    return Json(new { Message = "Error in saving file" });
-                }
+                var fileName = Path.GetFileName(file.FileName);
+                logger.Info("Uploading catalog {0}", fileName);
+
+                // TODO: selezionare dinamicamente l'importatore
+                var importer = new StandardGoogleImporter();
+                var importResults = importer.DraftImport(file.InputStream);
+
+                //var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
+                //file.SaveAs(path);
+                //var XmlDoc = XDocument.Load(new StreamReader(file.InputStream));
+                //var itemCount = XmlDoc.Element("rss").Element("channel").Elements("item").Count();
+
+                return View("ImportResult", importResults);
             }
-            return Json(new { Message = "File saved" });
+            throw new FileNotFoundException("No valid file uploaded");
         }
 
-        public ActionResult ProductsGrid() 
+        public ActionResult ProductsGrid()
         {
             return View();
         }
-	}
+    }
 }

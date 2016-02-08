@@ -1,0 +1,35 @@
+﻿@model Xlns.Catalog.Document.Model.ImportResult
+
+@{
+    ViewBag.Title = "ImportResult";
+}
+
+<h2>ImportResult</h2>
+
+<div>
+    <h4>ImportResult</h4>
+	<hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Success)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Success)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Failure)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Failure)
+        </dd>
+
+    </dl>
+    @foreach (var detail in Model.FailureDetails)
+    {
+        <p>@detail</p>
+    }
+</div>
+

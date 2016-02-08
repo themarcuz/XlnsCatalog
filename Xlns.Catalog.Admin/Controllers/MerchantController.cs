@@ -46,10 +46,11 @@ namespace Xlns.Catalog.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var documentRepository = new DocumentRepository();                
+                var documentRepository = new DocumentRepository();
+                if (string.IsNullOrEmpty(merchant.Id)) merchant.GenerateId();
                 documentRepository.Save(merchant);
             }
-            return RedirectToAction("Create");
+            return RedirectToAction("Index");
         }
 	}
 }

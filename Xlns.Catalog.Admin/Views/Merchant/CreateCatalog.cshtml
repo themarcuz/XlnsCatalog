@@ -1,0 +1,27 @@
+﻿@model Xlns.Catalog.Document.Model.Merchant
+
+<div>
+    @using (Html.BeginForm("UploadFile", "Catalog", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {        
+        <div class="col-sm-6">
+            <div class="input-group m-b">
+                <span class="input-group-btn">
+                    <label title="Upload catalog file" for="catalogFile" class="btn btn-primary">
+                        <input type="file" name="catalogFile" id="catalogFile" class="hide" onchange="fileSelected(this);">
+                        Upload new catalog
+                    </label>
+                </span>
+                <input type="text" class="form-control" >
+            </div>
+        </div>
+        
+        <input class="btn btn-primary" type="submit" value="submit" />
+    }
+</div>
+
+
+<script type="text/javascript">
+    function fileSelected(elem) {
+        $(elem).parent().parent().nextAll('input').val($(elem).val().match(/[^\/\\]+$/));        
+    };
+</script>

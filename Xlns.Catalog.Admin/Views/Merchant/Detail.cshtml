@@ -2,57 +2,113 @@
 
 @{
     ViewBag.Title = "Detail";
+    var merchant = Model;
 }
 
-<h2>Detail</h2>
-
-<div>
-    <h4>Merchant</h4>
-	<hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Name)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Url)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Url)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Contact)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Contact)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Address)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Address)
-        </dd>
-
-    </dl>
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Merchant: @merchant.Name</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Dashboard")">Home</a>
+            </li>
+            <li>
+                <a href="@Url.Action("Index", "Merchant")">Merchant</a>
+            </li>
+            <li class="active">
+                <strong>Detail</strong>
+            </li>
+        </ol>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row m-t-xs">
+        <div class="col-md-6">
+            <div class="profile-image">
+                <img src="@Model.LogoUrl" class="m-b-md img-responsive" alt="logo">
+            </div>
+            <div class="profile-info">
+                <div class="">
+                    <div>
+                        <h2 class="no-margins">@Model.Name</h2>
+                        <h4><a href="@Model.Url" target="_blank">@Model.Url</a>&nbsp;</h4>
+                        <p>@Model.Description&nbsp;</p>
+                        <p>@Model.Contact&nbsp;</p>
+                        <p>
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) 
+                            |
+                            @Html.ActionLink("Back to List", "Index")
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <table class="table small m-b-xs">
+                <tbody>
+                    <tr>
+                        <td>
+                            <strong>142</strong> Projects
+                        </td>
+                        <td>
+                            <strong>22</strong> Followers
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>61</strong> Comments
+                        </td>
+                        <td>
+                            <strong>54</strong> Articles
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>154</strong> Tags
+                        </td>
+                        <td>
+                            <strong>32</strong> Friends
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <div class="col-md-3">
+            <small>Sales in last 24h</small>
+            <h2 class="no-margins">206 480</h2>
+            <div id="sparkline1"></div>
+        </div>
+
+    </div>
+</div>
+
+
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="tabs-container">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a data-toggle="tab" href="#tab-catalogs">Catalogs</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-dashboards">Dashboards</a></li>
+                    <li class=""><a data-toggle="tab" href="#tab-plugins">Plugins</a></li>
+                </ul>
+                <div class="tab-content">
+                    <div id="tab-catalogs" class="tab-pane active">
+                        <div class="panel-body">
+                            @Html.Partial("CreateCatalog", Model)
+                        </div>
+                    </div>
+                    <div id="tab-dashboards" class="tab-pane">
+                        <div class="panel-body">
+                        </div>
+                    </div>
+                    <div id="tab-plugins" class="tab-pane">
+                        <div class="panel-body">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+

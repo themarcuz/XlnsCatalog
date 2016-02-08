@@ -5,7 +5,7 @@
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
-    <div class="col-lg-9">
+    <div class="col-sm-8">
         <h2>Merchants</h2>
         <ol class="breadcrumb">
             <li>
@@ -19,12 +19,23 @@
             </li>
         </ol>
     </div>
+    <div class="col-sm-4">
+         <div class="title-action">
+            <a href="~/Merchant/Create" class="btn btn-primary btn-sm">Add merchant</a>
+        </div>
+    </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
+    @*<div class="row">
         @foreach (var merchant in Model)
         {
             @Html.DisplayFor(modelItem => merchant, "MerchantTile")
+        }
+    </div>*@
+     <div class="row">
+        @foreach (var merchant in Model)
+        {
+            @Html.Partial("MerchantTile", merchant)
         }
     </div>
 </div>

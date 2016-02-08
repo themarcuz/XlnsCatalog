@@ -4408,7 +4408,7 @@ a.compose-mail {
 
 .profile-image img {
   width: 96px;
-  height: 96px; }
+  height: auto; }
 
 .profile-info {
   margin-left: 120px; }

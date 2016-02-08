@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
 
-namespace Xlns.Catalog.Core.Test
+namespace Xlns.Catalog.Document.Model
 {
-    public class Class1
+    public class AnalysisResult
     {
     }
 }

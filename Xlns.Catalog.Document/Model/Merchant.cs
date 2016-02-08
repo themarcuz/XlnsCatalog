@@ -14,6 +14,12 @@ namespace Xlns.Catalog.Document.Model
         public string Description { get; set; }
         
         public string Url { get; set; }
+        public string LogoUrl { get; set; }
+
+        public void GenerateId()
+        {
+            Id = Guid.NewGuid().ToString();
+        }
     }
 
     public class Merchant : MerchantBase
