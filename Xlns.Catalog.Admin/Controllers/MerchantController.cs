@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Xlns.Catalog.Document.Model;
 using Xlns.Catalog.Document.Repository;
+using Xlns.Catalog.Admin.Helpers;
 
 namespace Xlns.Catalog.Admin.Controllers
 {
@@ -14,14 +15,14 @@ namespace Xlns.Catalog.Admin.Controllers
         // GET: /Merchant/
         public ActionResult Index()
         {
-            var documentRepository = new DocumentRepository();
+            var documentRepository = new DocumentRepository(Session.GetCountryId());
             var merchants = documentRepository.LoadMany<Merchant>(10, 1);
             return View(merchants);
         }
 
         public ActionResult Detail(string Id)
         {
-            var documentRepository = new DocumentRepository();
+            var documentRepository = new DocumentRepository(Session.GetCountryId());
             var merchant = documentRepository.Load<Merchant>(Id);
             return View(merchant);
         }
@@ -36,7 +37,7 @@ namespace Xlns.Catalog.Admin.Controllers
         {
             if (string.IsNullOrEmpty(Id)) return RedirectToAction("Create");
             ViewBag.CurrentActionName = "Edit";
-            var documentRepository = new DocumentRepository();
+            var documentRepository = new DocumentRepository(Session.GetCountryId());
             var merchant = documentRepository.Load<Merchant>(Id);
             return View("Edit", merchant);
         }
@@ -46,7 +47,7 @@ namespace Xlns.Catalog.Admin.Controllers
         {
             if (ModelState.IsValid)
             {
-                var documentRepository = new DocumentRepository();
+                var documentRepository = new DocumentRepository(Session.GetCountryId());
                 if (string.IsNullOrEmpty(merchant.Id)) merchant.GenerateId();
                 documentRepository.Save(merchant);
             }

@@ -7,6 +7,9 @@ using System.Web.Mvc;
 using System.Xml.Linq;
 using System.Linq;
 using Xlns.Catalog.Document.Services;
+using Xlns.Catalog.Document.Repository;
+using Xlns.Catalog.Document.Model;
+using Xlns.Catalog.Admin.Helpers;
 
 namespace Xlns.Catalog.Admin.Controllers
 {
@@ -21,7 +24,7 @@ namespace Xlns.Catalog.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadFile()
+        public ActionResult UploadFile(string merchantId)
         {
 
             var file = Request.Files["catalogFile"];
@@ -31,9 +34,12 @@ namespace Xlns.Catalog.Admin.Controllers
                 var fileName = Path.GetFileName(file.FileName);
                 logger.Info("Uploading catalog {0}", fileName);
 
+                var documentRepository = new DocumentRepository(Session.GetCountryId());
+                var merchant = documentRepository.Load<Merchant>(merchantId);
+                
                 // TODO: selezionare dinamicamente l'importatore
                 var importer = new StandardGoogleImporter();
-                var importResults = importer.DraftImport(file.InputStream);
+                var importResults = importer.DraftImport(file.InputStream, merchant, Session.GetCountryId());
 
                 //var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
                 //file.SaveAs(path);

@@ -16,7 +16,7 @@ namespace Xlns.Catalog.Document.Services
     public class StandardGoogleImporter : IImporter
     {
 
-        public ImportResult DraftImport(System.IO.Stream originalFile)
+        public ImportResult DraftImport(System.IO.Stream originalFile, Merchant merchant, string countryId)
         {
             var XmlDoc = XDocument.Load(new StreamReader(originalFile));
             var importResult = new ImportResult();
@@ -33,42 +33,43 @@ namespace Xlns.Catalog.Document.Services
                         Color = item.Element(g + "color").Value,
                         Condition = item.Element(g + "condition").Value,
                         Created = DateTime.Now,
-                        Description = item.Element("description").Value,
-                        // TODO: calcolare DiscountPerc
+                        Description = item.Element("description").Value,                        
                         Gender = TranslateGender(item.Element(g + "gender").Value),
                         GoogleProductCategory = item.Element(g + "google_product_category").Value,
-                        //TODO: prendere la secona immaginer per HoverImageLink
-                        //TODO: calcolare Id = item.Element(g + "id").Value, aggiungendo anche merchant e country
-                        //TODO: ImageLinks
+                        AdditionalImageLinks = item.Elements(g + "additional_image_link").Select(el => el.Value).ToList(),                        
+                        //TODO: calcolare Id = item.Element(g + "id").Value, aggiungendo anche merchant e country                        
                         MainImageLink = item.Element(g + "image_link").Value,
                         Material = item.Element(g + "material").Value,
-                        //TODO: impostare il Merchant
-                        Price = ExtractPriceValue(item.Element(g + "price").Value),
-                        ProductGroup = item.Element(g + "item_group_id").Value,
-                        ProductLinks = new List<Link>() 
+                        Merchant = merchant,
+                        Pricing = new PricingInfo
                         {
-                            new Link(){ Type = LinkType.DESKTOP, Url = item.Element("link").Value },
-                            new Link(){ Type = LinkType.MOBILE, Url = item.Element("mobile_link").Value }
+                            Price = ExtractPriceValue(item.Element(g + "price").Value),
+                            SalePrice = ExtractPriceValue(item.Element(g + "sale_price").Value)
                         },
-                        SalePrice = ExtractPriceValue(item.Element(g + "sale_price").Value),
-                        Shipping = new ShippingInfo() 
+                        ProductGroup = item.Element(g + "item_group_id").Value,
+                        ProductLink = item.Element("link").Value,
+                        MobileProductLink = item.Element("mobile_link").Value,
+                        Shipping = new ShippingInfo()
                         {
                             Price = item.Element(g + "shipping").Element(g + "price").Value,
                             Service = item.Element(g + "shipping").Element(g + "service").Value
                         },
-                        Size = item.Element(g + "size").Value,
-                        SizeSystem = item.Element(g + "size_system").Value,
-                        SizeType = item.Element(g + "size_type").Value,
+                        SizeInfo = new SizeInfo
+                        {
+                            Size = item.Element(g + "size").Value,
+                            SizeSystem = item.Element(g + "size_system").Value,
+                            SizeType = item.Element(g + "size_type").Value
+                        },
                         SKU = item.Element(g + "mpn").Value,
                         Title = item.Element("title").Value,
                         Updated = DateTime.Now
                     };
-                    
-                    var stagingDocumentRepository = new StagingDocumentRepository();
+
+                    var stagingDocumentRepository = new StagingDocumentRepository(countryId);
                     stagingDocumentRepository.Save(productItem);
                     importResult.Success++;
                 }
-                catch (Exception ex) 
+                catch (Exception ex)
                 {
                     importResult.Failure++;
                     importResult.FailureDetails.Add(ex.Message);
@@ -77,7 +78,7 @@ namespace Xlns.Catalog.Document.Services
             //TODO: salvare l'importResult anche sul documento del catalogo in staging
             return importResult;
         }
-             
+
         public Model.AnalysisResult MakeAnalysis(Model.Catalog catalog)
         {
             throw new NotImplementedException();
@@ -92,24 +93,24 @@ namespace Xlns.Catalog.Document.Services
             {
                 return decimal.Parse(match.Value, CultureInfo.InvariantCulture);
             }
-            else 
+            else
             {
                 throw new ArgumentException("Can't extract decimal value from one of the price fields");
             }
-        }   
+        }
 
-        private Age TranslateAge(string age) 
+        private Age TranslateAge(string age)
         {
-            switch (age.ToLower().Trim() )
+            switch (age.ToLower().Trim())
             {
-                case "adult": 
+                case "adult":
                     return Age.ADULT;
                 case "child":
                 case "kids":
                     return Age.CHILD;
                 default:
                     throw new Exception(string.Format("Can't translate age info: {0}", age));
-            }         
+            }
         }
 
         private Gender TranslateGender(string gender)
@@ -132,7 +133,7 @@ namespace Xlns.Catalog.Document.Services
                     return Gender.UNISEX;
                 default:
                     throw new Exception(string.Format("Can't translate gender info: {0}", gender));
-            }   
+            }
         }
     }
 }

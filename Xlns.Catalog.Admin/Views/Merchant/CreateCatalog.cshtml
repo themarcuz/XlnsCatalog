@@ -3,6 +3,7 @@
 <div>
     @using (Html.BeginForm("UploadFile", "Catalog", FormMethod.Post, new { enctype = "multipart/form-data" }))
     {        
+        @Html.Hidden("merchantId", Model.Id)
         <div class="col-sm-6">
             <div class="input-group m-b">
                 <span class="input-group-btn">

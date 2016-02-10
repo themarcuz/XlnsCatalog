@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,6 +11,12 @@ namespace Xlns.Catalog.Document.Repository
     public class DocumentRepository
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        protected string _countryId;
+
+        public DocumentRepository(string countryId)
+        {
+            _countryId = countryId;
+        }
 
         protected virtual IDocumentSession OpenSession() 
         {
@@ -49,10 +56,34 @@ namespace Xlns.Catalog.Document.Repository
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        public StagingDocumentRepository(string countryId) : base(countryId) 
+        {}
+
         protected override IDocumentSession OpenSession()
         {
-            return StagingDocumentStore.Instance.OpenSession();
+            return StagingDocumentStore.Instance.OpenSession(
+                new Raven.Client.Document.OpenSessionOptions
+                {
+                    Database = ConfigurationManager.AppSettings["StagingRavenDbName"].Replace("{countryId}", _countryId)
+                });
         }
     }
+
+    public class CatalogDocumentRepository : DocumentRepository
+    {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        public CatalogDocumentRepository(string countryId) : base(countryId)
+        { }
+
+        protected override IDocumentSession OpenSession()
+        {
+            return DataDocumentStore.Instance.OpenSession(
+                new Raven.Client.Document.OpenSessionOptions
+                {
+                    Database = ConfigurationManager.AppSettings["CatalogRavenDbName"].Replace("{countryId}", _countryId)
+                });
+        }
+    }   
 
 }

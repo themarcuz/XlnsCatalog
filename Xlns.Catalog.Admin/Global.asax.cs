@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using System.Web.Optimization;
 using System.Web.Routing;
 using Xlns.Catalog.Document.Repository;
+using Xlns.Catalog.Admin.Helpers;
 
 namespace Xlns.Catalog.Admin
 {
@@ -21,7 +22,12 @@ namespace Xlns.Catalog.Admin
 
             //Initialize RavenDB Document Store
             DataDocumentStore.Initialize();
-            StagingDocumentStore.Initialize();
+            StagingDocumentStore.Initialize();            
+        }
+
+        protected void Session_Start()
+        {
+            Session.Add("countryId", "IT");
         }
     }
 }
