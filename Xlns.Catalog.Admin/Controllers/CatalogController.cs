@@ -5,7 +5,6 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Xml.Linq;
-using System.Linq;
 using Xlns.Catalog.Document.Services;
 using Xlns.Catalog.Document.Repository;
 using Xlns.Catalog.Document.Model;
@@ -18,9 +17,35 @@ namespace Xlns.Catalog.Admin.Controllers
 
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public ActionResult Index()
+        public ActionResult List(string merchantId)
+        {           
+            var documentRepository = new DocumentRepository();
+            var merchantCatalogs = documentRepository.LoadMany<Catalogue>(0, 0);
+            /*
+            merchantCatalogs.Add(new Catalogue
+            {
+                Country = new Core.Model.Country { Name = "Italy", Code = "IT", Currency = Core.Model.Currency.EUR },
+                Created = DateTime.Now,
+                Name = "Prova 1",
+                Status = CatalogStatus.QUALITY_ASSURANCE,
+                Updated = DateTime.Now
+            });
+            merchantCatalogs.Add(new Catalogue
+            {
+                Country = new Core.Model.Country { Name = "United States", Code = "US", Currency = Core.Model.Currency.USD },
+                Created = DateTime.Now,
+                Name = "Prova 2",
+                Status = CatalogStatus.DRAFT,
+                Updated = DateTime.Now
+            });
+            */
+            return PartialView(merchantCatalogs);
+        }
+
+        [HttpPost]
+        public ActionResult Create(Catalogue catalogue)
         {
-            return View();
+            return RedirectToAction("Detail", "Merchant", new { catalogue.MerchantId });
         }
 
         [HttpPost]
@@ -34,7 +59,7 @@ namespace Xlns.Catalog.Admin.Controllers
                 var fileName = Path.GetFileName(file.FileName);
                 logger.Info("Uploading catalog {0}", fileName);
 
-                var documentRepository = new DocumentRepository(Session.GetCountryId());
+                var documentRepository = new DocumentRepository();
                 var merchant = documentRepository.Load<Merchant>(merchantId);
                 
                 // TODO: selezionare dinamicamente l'importatore
@@ -45,11 +70,20 @@ namespace Xlns.Catalog.Admin.Controllers
                 //file.SaveAs(path);
                 //var XmlDoc = XDocument.Load(new StreamReader(file.InputStream));
                 //var itemCount = XmlDoc.Element("rss").Element("channel").Elements("item").Count();
-
-                return View("ImportResult", importResults);
+                                
+                TempData["importResult"] = importResults;
+                return RedirectToAction("ImportResult");
             }
             throw new FileNotFoundException("No valid file uploaded");
         }
+
+
+        public ActionResult ImportResult()
+        {
+            var importResult = TempData["importResult"];
+            return View(importResult);
+        }
+
 
         public ActionResult ProductsGrid()
         {

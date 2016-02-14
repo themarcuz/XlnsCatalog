@@ -1,0 +1,28 @@
+﻿@model List<Xlns.Catalog.Document.Model.Catalogue>
+
+
+
+@if (Model == null || Model.Count == 0)
+{ 
+    <span>No elements found</span>
+}
+@foreach (var catalogue in Model)
+{
+    <div class="row">
+        <div class="col-lg-2">
+            @catalogue.Country.Code
+        </div>
+        <div class="col-lg-4">
+            @catalogue.Name
+        </div>
+        <div class="col-lg-2">
+            @catalogue.Status
+        </div>
+        <div class="col-lg-2">
+            @catalogue.Created
+        </div>
+        <div class="col-lg-2">
+            @catalogue.Updated
+        </div>
+    </div>
+}

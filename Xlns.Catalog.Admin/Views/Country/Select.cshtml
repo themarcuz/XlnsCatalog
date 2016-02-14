@@ -1,0 +1,12 @@
+﻿@model List<Xlns.Catalog.Core.Model.Country>
+
+<label class="col-sm-2 control-label">Country:</label>
+<div class="col-sm-10">
+    <select class="form-control" id="countryId">
+        <option>select one</option>
+        @foreach (var country in Model)
+        {
+            <option value="@country.Code">@country.Name</option>    
+        }
+    </select>
+</div>

@@ -122,6 +122,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CatalogController.cs" />
+    <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Global.asax.cs">
@@ -1614,6 +1615,9 @@
     <Content Include="Views\Merchant\MerchantTile.cshtml" />
     <Content Include="Views\Merchant\CreateCatalog.cshtml" />
     <Content Include="Views\Catalog\ImportResult.cshtml" />
+    <Content Include="Views\Country\Select.cshtml" />
+    <Content Include="Views\Merchant\UploadCatalog.cshtml" />
+    <Content Include="Views\Catalog\List.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xlns.Catalog.Core\Xlns.Catalog.Core.csproj">

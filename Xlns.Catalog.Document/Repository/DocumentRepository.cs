@@ -11,13 +11,7 @@ namespace Xlns.Catalog.Document.Repository
     public class DocumentRepository
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        protected string _countryId;
-
-        public DocumentRepository(string countryId)
-        {
-            _countryId = countryId;
-        }
-
+               
         protected virtual IDocumentSession OpenSession() 
         {
             return DataDocumentStore.Instance.OpenSession();
@@ -40,14 +34,21 @@ namespace Xlns.Catalog.Document.Repository
             }
         }
 
+        /// <summary>
+        /// Load a list of elements, with possibilities to page them
+        /// </summary>
+        /// <typeparam name="T">Document type to load</typeparam>
+        /// <param name="itemsNumber">number of item per page; 0 means read them all</param>
+        /// <param name="pageNumber">number of page to be skipped; 0 means read from the first</param>
+        /// <returns></returns>
         public IList<T> LoadMany<T>(int itemsNumber, int pageNumber)
         {
             using (IDocumentSession session = OpenSession())
             {
-                return session.Query<T>()
-                    .Skip(itemsNumber * (pageNumber-1))
-                    .Take(itemsNumber)
-                    .ToList();
+                var result = session.Query<T>().AsQueryable();
+                if (pageNumber > 0 && itemsNumber > 0) result = result.Skip(itemsNumber * (pageNumber - 1));
+                if (itemsNumber > 0) result = result.Take(itemsNumber);
+                return result.ToList();
             }
         }
     }
@@ -55,9 +56,12 @@ namespace Xlns.Catalog.Document.Repository
     public class StagingDocumentRepository : DocumentRepository
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        protected string _countryId;
 
-        public StagingDocumentRepository(string countryId) : base(countryId) 
-        {}
+        public StagingDocumentRepository(string countryId) : base() 
+        {
+            _countryId = countryId;
+        }
 
         protected override IDocumentSession OpenSession()
         {
@@ -72,9 +76,12 @@ namespace Xlns.Catalog.Document.Repository
     public class CatalogDocumentRepository : DocumentRepository
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+        protected string _countryId;
 
-        public CatalogDocumentRepository(string countryId) : base(countryId)
-        { }
+        public CatalogDocumentRepository(string countryId) : base()
+        {
+            _countryId = countryId;
+        }
 
         protected override IDocumentSession OpenSession()
         {

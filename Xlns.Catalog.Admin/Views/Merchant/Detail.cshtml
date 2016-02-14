@@ -36,9 +36,9 @@
                         <p>@Model.Description&nbsp;</p>
                         <p>@Model.Contact&nbsp;</p>
                         <p>
-                            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) 
-                            |
-                            @Html.ActionLink("Back to List", "Index")
+                            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class="btn btn-primary btn-xs"}) 
+                            
+                            @Html.ActionLink("Back to List", "Index", null, new { @class="btn btn-primary btn-xs"})
                         </p>
                     </div>
                 </div>
@@ -96,7 +96,9 @@
                 <div class="tab-content">
                     <div id="tab-catalogs" class="tab-pane active">
                         <div class="panel-body">
+                            @Html.Action("List", "Catalog", new { merchantId = Model.Id })
                             @Html.Partial("CreateCatalog", Model)
+                            @Html.Partial("UploadCatalog", Model)
                         </div>
                     </div>
                     <div id="tab-dashboards" class="tab-pane">

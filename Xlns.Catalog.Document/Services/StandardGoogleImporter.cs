@@ -15,6 +15,7 @@ namespace Xlns.Catalog.Document.Services
 {
     public class StandardGoogleImporter : IImporter
     {
+        private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public ImportResult DraftImport(System.IO.Stream originalFile, Merchant merchant, string countryId)
         {
@@ -36,8 +37,8 @@ namespace Xlns.Catalog.Document.Services
                         Description = item.Element("description").Value,                        
                         Gender = TranslateGender(item.Element(g + "gender").Value),
                         GoogleProductCategory = item.Element(g + "google_product_category").Value,
-                        AdditionalImageLinks = item.Elements(g + "additional_image_link").Select(el => el.Value).ToList(),                        
-                        //TODO: calcolare Id = item.Element(g + "id").Value, aggiungendo anche merchant e country                        
+                        AdditionalImageLinks = item.Elements(g + "additional_image_link").Select(el => el.Value).ToList(),
+                        Id = string.Format("{0}_{1}_{2}", countryId, merchant.Id, item.Element(g + "id").Value),
                         MainImageLink = item.Element(g + "image_link").Value,
                         Material = item.Element(g + "material").Value,
                         Merchant = merchant,
@@ -79,7 +80,7 @@ namespace Xlns.Catalog.Document.Services
             return importResult;
         }
 
-        public Model.AnalysisResult MakeAnalysis(Model.Catalog catalog)
+        public Model.AnalysisResult MakeAnalysis(Catalogue catalogue)
         {
             throw new NotImplementedException();
         }
@@ -109,7 +110,9 @@ namespace Xlns.Catalog.Document.Services
                 case "kids":
                     return Age.CHILD;
                 default:
-                    throw new Exception(string.Format("Can't translate age info: {0}", age));
+                    logger.Warn(string.Format("Can't translate age info: '{0}' ; using 'adult' as default value", age));
+                    return Age.ADULT;
+                    
             }
         }
 

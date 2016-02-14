@@ -7,7 +7,7 @@ using Xlns.Catalog.Core.Model;
 
 namespace Xlns.Catalog.Document.Model
 {
-    public class Catalog
+    public class Catalogue
     {
         public string Id { get; set; }
         public string Name { get; set; }

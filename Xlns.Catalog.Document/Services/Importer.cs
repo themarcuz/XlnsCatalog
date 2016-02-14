@@ -11,7 +11,7 @@ namespace Xlns.Catalog.Document.Services
     public interface IImporter 
     {
         Model.ImportResult DraftImport(Stream originalFile, Merchant merchant, string countryId);
-        Model.AnalysisResult MakeAnalysis(Model.Catalog catalog);
+        Model.AnalysisResult MakeAnalysis(Catalogue catalogue);
     }
 
     public abstract class Importer
