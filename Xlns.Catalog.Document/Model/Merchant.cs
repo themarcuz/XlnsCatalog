@@ -16,11 +16,7 @@ namespace Xlns.Catalog.Document.Model
         public string Address { get; set; } 
         public string Url { get; set; }
         public string LogoUrl { get; set; }
-
-        public void GenerateId()
-        {
-            Id = Guid.NewGuid().ToString();
-        }
+        
     }
 
 }

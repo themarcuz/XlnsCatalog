@@ -11,7 +11,7 @@ namespace Xlns.Catalog.Document.Model
     {
         public string Id { get; set; }
         public string Name { get; set; }
-        public Country Country { get; set; }
+        public string CountryCode { get; set; }
         public CatalogStatus Status { get; set; }
         public DateTime Updated { get; set; }
         public DateTime Created { get; set; }

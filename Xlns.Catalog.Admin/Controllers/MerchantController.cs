@@ -48,7 +48,7 @@ namespace Xlns.Catalog.Admin.Controllers
             if (ModelState.IsValid)
             {
                 var documentRepository = new DocumentRepository();
-                if (string.IsNullOrEmpty(merchant.Id)) merchant.GenerateId();
+                if (string.IsNullOrEmpty(merchant.Id)) merchant.Id = string.Empty;
                 documentRepository.Save(merchant);
             }
             return RedirectToAction("Index");

@@ -26,7 +26,7 @@ namespace Xlns.Catalog.Document.Repository
         public static void Initialize()
         {
             instance = new DocumentStore { ConnectionStringName = "RavenDB" };
-            instance.Conventions.IdentityPartsSeparator = "-";
+            instance.Conventions.IdentityPartsSeparator = "-";            
             instance.Initialize();            
         }
     }

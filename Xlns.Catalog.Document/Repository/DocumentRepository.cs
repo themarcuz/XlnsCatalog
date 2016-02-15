@@ -20,7 +20,7 @@ namespace Xlns.Catalog.Document.Repository
         public void Save<T>(T document) 
         {
             using (IDocumentSession session = OpenSession())
-            {                
+            {                                
                 session.Store(document);
                 session.SaveChanges();
             }

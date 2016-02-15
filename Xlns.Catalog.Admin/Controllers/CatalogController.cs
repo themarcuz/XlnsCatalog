@@ -45,7 +45,13 @@ namespace Xlns.Catalog.Admin.Controllers
         [HttpPost]
         public ActionResult Create(Catalogue catalogue)
         {
-            return RedirectToAction("Detail", "Merchant", new { catalogue.MerchantId });
+            var documentRepository = new DocumentRepository();
+            catalogue.Created = DateTime.Now;
+            catalogue.Updated = DateTime.Now;
+            catalogue.Status = CatalogStatus.DRAFT;
+            catalogue.Id = string.Empty;
+            documentRepository.Save(catalogue);
+            return RedirectToAction("Detail", "Merchant", new { Id = catalogue.MerchantId });
         }
 
         [HttpPost]
