@@ -115,7 +115,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
@@ -130,6 +129,7 @@
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
+    <Compile Include="Models\CatalogueList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -1613,10 +1613,10 @@
     <Content Include="Views\Shared\DisplayTemplates\MerchantTile.cshtml" />
     <Content Include="Views\Merchant\Detail.cshtml" />
     <Content Include="Views\Merchant\MerchantTile.cshtml" />
-    <Content Include="Views\Merchant\CreateCatalog.cshtml" />
+    <Content Include="Views\Catalog\CreateCatalog.cshtml" />
     <Content Include="Views\Catalog\ImportResult.cshtml" />
     <Content Include="Views\Country\Select.cshtml" />
-    <Content Include="Views\Merchant\UploadCatalog.cshtml" />
+    <Content Include="Views\Catalog\UploadCatalog.cshtml" />
     <Content Include="Views\Catalog\List.cshtml" />
   </ItemGroup>
   <ItemGroup>

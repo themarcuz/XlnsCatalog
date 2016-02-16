@@ -22,8 +22,9 @@ namespace Xlns.Catalog.Document.Model
     public enum CatalogStatus 
     {
         DRAFT = 0,
-        QUALITY_ASSURANCE = 20,
+        QUALITY_ASSURANCE = 20,        
         APPROVED = 30,
-        LIVE = 50
+        LIVE = 50,
+        REJECTED = 99
     }
 }

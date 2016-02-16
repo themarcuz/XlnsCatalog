@@ -1,0 +1,30 @@
+﻿@model string
+
+<fieldset class="form-horizontal">
+    @using (Html.BeginForm("Create", "Catalog", FormMethod.Post, new { @class = "form-inline" }))
+    {        
+        @Html.Hidden("merchantId", Model)
+        <div class="row">
+            <div class="col-sm-8">
+                <div class="form-group col-sm-4">
+                    <label class="col-sm-2 control-label">Name:</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" placeholder="Catalog name" name="Name">
+                    </div>
+                </div>
+                <div class="form-group col-sm-4">                    
+                    @Html.Action("Select", "Country")
+                </div>
+                <div class="form-group col-sm-4">
+                    <input class="btn btn-primary" type="submit" value="Create catalag" />                        
+                </div>
+            </div>
+        </div>
+    }
+</fieldset>
+
+<script type="text/javascript">
+    function fileSelected(elem) {
+        $(elem).parent().parent().nextAll('input').val($(elem).val().match(/[^\/\\]+$/));
+    };
+</script>

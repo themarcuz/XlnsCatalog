@@ -9,6 +9,7 @@ using Xlns.Catalog.Document.Services;
 using Xlns.Catalog.Document.Repository;
 using Xlns.Catalog.Document.Model;
 using Xlns.Catalog.Admin.Helpers;
+using Xlns.Catalog.Admin.Models;
 
 namespace Xlns.Catalog.Admin.Controllers
 {
@@ -18,9 +19,10 @@ namespace Xlns.Catalog.Admin.Controllers
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
         public ActionResult List(string merchantId)
-        {           
+        {
+            var merchantCatalogs = new CatalogueList { MerchantId = merchantId };
             var documentRepository = new DocumentRepository();
-            var merchantCatalogs = documentRepository.LoadMany<Catalogue>(0, 0);
+            merchantCatalogs.Catalogs = documentRepository.LoadMany<Catalogue>(0, 0);
             /*
             merchantCatalogs.Add(new Catalogue
             {
@@ -39,6 +41,7 @@ namespace Xlns.Catalog.Admin.Controllers
                 Updated = DateTime.Now
             });
             */
+            
             return PartialView(merchantCatalogs);
         }
 

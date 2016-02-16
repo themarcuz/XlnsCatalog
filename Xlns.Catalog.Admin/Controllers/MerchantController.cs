@@ -19,7 +19,7 @@ namespace Xlns.Catalog.Admin.Controllers
             var merchants = documentRepository.LoadMany<Merchant>(10, 1);
             return View(merchants);
         }
-
+        
         public ActionResult Detail(string Id)
         {
             var documentRepository = new DocumentRepository();

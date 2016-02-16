@@ -1,28 +1,71 @@
-﻿@model List<Xlns.Catalog.Document.Model.Catalogue>
+﻿@model Xlns.Catalog.Admin.Models.CatalogueList
 
-
-
-@if (Model == null || Model.Count == 0)
-{ 
-    <span>No elements found</span>
-}
-@foreach (var catalogue in Model)
-{
-    <div class="row">
-        <div class="col-lg-2">
-            @catalogue.CountryCode
-        </div>
-        <div class="col-lg-4">
-            @catalogue.Name
-        </div>
-        <div class="col-lg-2">
-            @catalogue.Status
-        </div>
-        <div class="col-lg-2">
-            @catalogue.Created
-        </div>
-        <div class="col-lg-2">
-            @catalogue.Updated
+<div class="ibox">
+    <div class="ibox-title">
+        <h5>Catalog list</h5>
+        <div class="ibox-tools">
+            <a href="#" class="btn btn-primary" onclick="$('#createCatalogPanel').toggle();">Add new catalog</a>
         </div>
     </div>
-}
+    <div class="ibox-content">
+        <div id="createCatalogPanel" style="display: none">
+            @Html.Partial("CreateCatalog", Model.MerchantId)
+        </div>
+        @if (Model.Catalogs == null || Model.Catalogs.Count == 0)
+        { 
+            <span>No elements found</span>
+        }
+        <div class="table-responsive" style="margin-top: 15px">
+            <table class="table table-hover issue-tracker">
+                <tbody>
+                    @foreach (var catalogue in Model.Catalogs)
+                    {
+                        <tr>
+                            <td>
+                                @catalogue.CountryCode
+                            </td>
+                            <td>
+                                @catalogue.Name
+                            </td>
+                            <td>
+                                @{
+                                    var statusClass = "label ";
+                                    switch (catalogue.Status)
+                                    {
+                                        case Xlns.Catalog.Document.Model.CatalogStatus.DRAFT:
+                                            statusClass += "label-plain";
+                                            break;
+                                        case Xlns.Catalog.Document.Model.CatalogStatus.QUALITY_ASSURANCE:
+                                            statusClass += "label-info";
+                                            break;
+                                        case Xlns.Catalog.Document.Model.CatalogStatus.APPROVED:
+                                            statusClass += "label-success";
+                                            break;
+                                        case Xlns.Catalog.Document.Model.CatalogStatus.LIVE:
+                                            statusClass += "label-primary";
+                                            break;
+                                        case Xlns.Catalog.Document.Model.CatalogStatus.REJECTED:
+                                            statusClass += "label-danger";
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                <span class="@statusClass">@catalogue.Status</span>
+                            </td>
+                            <td>
+                                @catalogue.Created
+                            </td>
+                            <td>
+                                @catalogue.Updated
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
