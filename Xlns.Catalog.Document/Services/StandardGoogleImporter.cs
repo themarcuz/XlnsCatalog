@@ -17,8 +17,10 @@ namespace Xlns.Catalog.Document.Services
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public ImportResult DraftImport(System.IO.Stream originalFile, Merchant merchant, string countryId)
+        public ImportResult DraftImport(Stream originalFile, Catalogue catalogue)
         {
+            var documentRepository = new DocumentRepository();
+            var merchant = documentRepository.Load<Merchant>(catalogue.MerchantId);
             var XmlDoc = XDocument.Load(new StreamReader(originalFile));
             var importResult = new ImportResult();
             XNamespace g = "http://base.google.com/ns/1.0";
@@ -31,6 +33,7 @@ namespace Xlns.Catalog.Document.Services
                         Age = TranslateAge(item.Element(g + "age_group").Value),
                         Availability = item.Element(g + "availability").Value,
                         Brand = item.Element(g + "brand").Value,
+                        CatalogueId = catalogue.Id,
                         Color = item.Element(g + "color").Value,
                         Condition = item.Element(g + "condition").Value,
                         Created = DateTime.Now,
@@ -38,7 +41,7 @@ namespace Xlns.Catalog.Document.Services
                         Gender = TranslateGender(item.Element(g + "gender").Value),
                         GoogleProductCategory = item.Element(g + "google_product_category").Value,
                         AdditionalImageLinks = item.Elements(g + "additional_image_link").Select(el => el.Value).ToList(),
-                        Id = string.Format("{0}_{1}_{2}", countryId, merchant.Id, item.Element(g + "id").Value),
+                        Id = string.Format("{0}__{1}", catalogue.Id, item.Element(g + "id").Value),
                         MainImageLink = item.Element(g + "image_link").Value,
                         Material = item.Element(g + "material").Value,
                         Merchant = merchant,
@@ -66,7 +69,7 @@ namespace Xlns.Catalog.Document.Services
                         Updated = DateTime.Now
                     };
 
-                    var stagingDocumentRepository = new StagingDocumentRepository(countryId);
+                    var stagingDocumentRepository = new StagingDocumentRepository(catalogue.CountryCode);
                     stagingDocumentRepository.Save(productItem);
                     importResult.Success++;
                 }

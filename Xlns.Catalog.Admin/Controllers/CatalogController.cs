@@ -21,27 +21,8 @@ namespace Xlns.Catalog.Admin.Controllers
         public ActionResult List(string merchantId)
         {
             var merchantCatalogs = new CatalogueList { MerchantId = merchantId };
-            var documentRepository = new DocumentRepository();
-            merchantCatalogs.Catalogs = documentRepository.LoadMany<Catalogue>(0, 0);
-            /*
-            merchantCatalogs.Add(new Catalogue
-            {
-                Country = new Core.Model.Country { Name = "Italy", Code = "IT", Currency = Core.Model.Currency.EUR },
-                Created = DateTime.Now,
-                Name = "Prova 1",
-                Status = CatalogStatus.QUALITY_ASSURANCE,
-                Updated = DateTime.Now
-            });
-            merchantCatalogs.Add(new Catalogue
-            {
-                Country = new Core.Model.Country { Name = "United States", Code = "US", Currency = Core.Model.Currency.USD },
-                Created = DateTime.Now,
-                Name = "Prova 2",
-                Status = CatalogStatus.DRAFT,
-                Updated = DateTime.Now
-            });
-            */
-            
+            var catalogService = new CatalogService();
+            merchantCatalogs.Catalogs = catalogService.GetMerchantsCatalogues(merchantId);
             return PartialView(merchantCatalogs);
         }
 
@@ -58,7 +39,25 @@ namespace Xlns.Catalog.Admin.Controllers
         }
 
         [HttpPost]
-        public ActionResult UploadFile(string merchantId)
+        public ActionResult Delete(string catalogueId)
+        {
+            var documentRepository = new DocumentRepository();
+            var catalogue = documentRepository.Load<Catalogue>(catalogueId);
+            var merchantId = catalogue.MerchantId;
+            var catalogService = new CatalogService();
+            var productDeleted = catalogService.DeleteCatalog(catalogueId);
+            TempData.Add("notification",
+                new Notification
+                {
+                    Title = "Catalogue succesfully deleted",
+                    Message = string.Format("{0} products deleted from catalog {1}", productDeleted, catalogue.Name),
+                    Type = "success"
+                });
+            return RedirectToAction("Detail", "Merchant", new { Id = merchantId });
+        }
+
+        [HttpPost]
+        public ActionResult UploadFile(string catalogueId)
         {
 
             var file = Request.Files["catalogFile"];
@@ -69,17 +68,17 @@ namespace Xlns.Catalog.Admin.Controllers
                 logger.Info("Uploading catalog {0}", fileName);
 
                 var documentRepository = new DocumentRepository();
-                var merchant = documentRepository.Load<Merchant>(merchantId);
-                
+                var catalogue = documentRepository.Load<Catalogue>(catalogueId);
+
                 // TODO: selezionare dinamicamente l'importatore
                 var importer = new StandardGoogleImporter();
-                var importResults = importer.DraftImport(file.InputStream, merchant, Session.GetCountryId());
+                var importResults = importer.DraftImport(file.InputStream, catalogue);
 
                 //var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
                 //file.SaveAs(path);
                 //var XmlDoc = XDocument.Load(new StreamReader(file.InputStream));
                 //var itemCount = XmlDoc.Element("rss").Element("channel").Elements("item").Count();
-                                
+
                 TempData["importResult"] = importResults;
                 return RedirectToAction("ImportResult");
             }

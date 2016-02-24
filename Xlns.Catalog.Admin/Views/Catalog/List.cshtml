@@ -15,12 +15,22 @@
         { 
             <span>No elements found</span>
         }
-        <div class="table-responsive" style="margin-top: 15px">
-            <table class="table table-hover issue-tracker">
+        <div style="margin-top: 15px">
+            <table class="table table-hover table-responsive issue-tracker">
+                <thead>
+                    <tr>
+                        <th data-toggle="true">Country</th>
+                        <th data-hide="phone">Catalog Name</th>
+                        <th data-hide="all">Status</th>
+                        <th data-hide="phone">Created</th>
+                        <th data-hide="phone,tablet">Last update</th>
+                        <th class="text-right" data-sort-ignore="true">Action</th>
+                    </tr>
+                </thead>
                 <tbody>
                     @foreach (var catalogue in Model.Catalogs)
                     {
-                        <tr>
+                        <tr data-catalogid="@catalogue.Id">
                             <td>
                                 @catalogue.CountryCode
                             </td>
@@ -29,27 +39,27 @@
                             </td>
                             <td>
                                 @{
-                                    var statusClass = "label ";
-                                    switch (catalogue.Status)
-                                    {
-                                        case Xlns.Catalog.Document.Model.CatalogStatus.DRAFT:
-                                            statusClass += "label-plain";
-                                            break;
-                                        case Xlns.Catalog.Document.Model.CatalogStatus.QUALITY_ASSURANCE:
-                                            statusClass += "label-info";
-                                            break;
-                                        case Xlns.Catalog.Document.Model.CatalogStatus.APPROVED:
-                                            statusClass += "label-success";
-                                            break;
-                                        case Xlns.Catalog.Document.Model.CatalogStatus.LIVE:
-                                            statusClass += "label-primary";
-                                            break;
-                                        case Xlns.Catalog.Document.Model.CatalogStatus.REJECTED:
-                                            statusClass += "label-danger";
-                                            break;
-                                        default:
-                                            break;
-                                    }
+                        var statusClass = "label ";
+                        switch (catalogue.Status)
+                        {
+                            case Xlns.Catalog.Document.Model.CatalogStatus.DRAFT:
+                                statusClass += "label-plain";
+                                break;
+                            case Xlns.Catalog.Document.Model.CatalogStatus.QUALITY_ASSURANCE:
+                                statusClass += "label-info";
+                                break;
+                            case Xlns.Catalog.Document.Model.CatalogStatus.APPROVED:
+                                statusClass += "label-success";
+                                break;
+                            case Xlns.Catalog.Document.Model.CatalogStatus.LIVE:
+                                statusClass += "label-primary";
+                                break;
+                            case Xlns.Catalog.Document.Model.CatalogStatus.REJECTED:
+                                statusClass += "label-danger";
+                                break;
+                            default:
+                                break;
+                        }
                                 }
                                 <span class="@statusClass">@catalogue.Status</span>
                             </td>
@@ -59,6 +69,20 @@
                             <td>
                                 @catalogue.Updated
                             </td>
+                            <td class="text-right">
+                                <div>
+                                    <button class="btn btn-outline btn-white btn-xs">View products</button>
+                                    <button class="btn btn-outline btn-white btn-xs">Edit</button>
+                                    <button class="btn btn-outline btn-success btn-xs">Analysis</button>
+                                    @using (@Html.BeginForm("Delete", "Catalog", FormMethod.Post, new { style = "display:inline" }))
+                                    {
+                                        @Html.Hidden("catalogueId", catalogue.Id)
+                                        <button class="btn btn-outline btn-danger btn-xs deleteCatalogButton" data-toggle="modal" data-target="#deleteCatalogModal">
+                                            <i class="glyphicon glyphicon-trash"></i> Delete
+                                        </button>
+                                    }
+                                </div>
+                            </td>
                         </tr>
                     }
                 </tbody>
@@ -67,5 +91,41 @@
     </div>
 </div>
 
+<div class="modal inmodal fade" id="deleteCatalogModal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                <h4 class="modal-title">Are you sure?</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <strong>Deleting a catalog will delete also all the products associated with it</strong>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" data-dismiss="modal">Cancel</button>
+                <button id="deleteCatalogModalConfirm" type="button" class="btn btn-danger" data-dismiss="modal">DELETE</button>
+            </div>
+        </div>
+    </div>
+</div>
 
+<script type="text/javascript">
+    $('.deleteCatalogButton').on('click', function (e) {
+        e.preventDefault();
+        var form = $(this).closest('form');
+        $('#deleteCatalogModal').find('.modal-footer #deleteCatalogModalConfirm').data('form', form);
+    });
 
+    /* Form confirm (yes/ok) handler, submits form */
+    $('#deleteCatalogModal').find('.modal-footer #deleteCatalogModalConfirm').on('click', function () {
+        $(this).data('form').submit();
+    });
+
+    function catalogDeleted(a, b, c) {
+        console.log(a);
+        console.log(b);
+        console.log(c);
+    }
+</script>

@@ -8,5 +8,6 @@ namespace Xlns.Catalog.Document.Services
 {
     public class MerchantService
     {
+        
     }
 }

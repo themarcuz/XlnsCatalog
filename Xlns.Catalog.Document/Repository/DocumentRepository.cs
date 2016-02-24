@@ -12,7 +12,7 @@ namespace Xlns.Catalog.Document.Repository
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
                
-        protected virtual IDocumentSession OpenSession() 
+        public virtual IDocumentSession OpenSession() 
         {
             return DataDocumentStore.Instance.OpenSession();
         }
@@ -22,6 +22,15 @@ namespace Xlns.Catalog.Document.Repository
             using (IDocumentSession session = OpenSession())
             {                                
                 session.Store(document);
+                session.SaveChanges();
+            }
+        }
+
+        public void Delete<T>(string id)
+        {
+            using (IDocumentSession session = OpenSession())
+            {
+                session.Delete(id);
                 session.SaveChanges();
             }
         }
@@ -53,7 +62,7 @@ namespace Xlns.Catalog.Document.Repository
         }
     }
 
-    public class StagingDocumentRepository : DocumentRepository
+    public class StagingDocumentRepository : DocumentRepository, ICatalogRepository
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         protected string _countryId;
@@ -63,7 +72,7 @@ namespace Xlns.Catalog.Document.Repository
             _countryId = countryId;
         }
 
-        protected override IDocumentSession OpenSession()
+        public override IDocumentSession OpenSession()
         {
             return StagingDocumentStore.Instance.OpenSession(
                 new Raven.Client.Document.OpenSessionOptions
@@ -73,7 +82,7 @@ namespace Xlns.Catalog.Document.Repository
         }
     }
 
-    public class CatalogDocumentRepository : DocumentRepository
+    public class CatalogDocumentRepository : DocumentRepository, ICatalogRepository
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
         protected string _countryId;
@@ -83,7 +92,7 @@ namespace Xlns.Catalog.Document.Repository
             _countryId = countryId;
         }
 
-        protected override IDocumentSession OpenSession()
+        public override IDocumentSession OpenSession()
         {
             return DataDocumentStore.Instance.OpenSession(
                 new Raven.Client.Document.OpenSessionOptions

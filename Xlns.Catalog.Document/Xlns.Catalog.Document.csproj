@@ -50,7 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Model\Catalog.cs" />
+    <Compile Include="Model\Catalogue.cs" />
     <Compile Include="Model\ImportResult.cs" />
     <Compile Include="Model\Merchant.cs" />
     <Compile Include="Model\ProductItem.cs" />
@@ -58,6 +58,8 @@
     <Compile Include="Repository\DataDocumentStore.cs" />
     <Compile Include="Repository\DocumentRepository.cs" />
     <Compile Include="Model\AnalysisResult.cs" />
+    <Compile Include="Repository\ICatalogRepository.cs" />
+    <Compile Include="Services\CatalogService.cs" />
     <Compile Include="Services\Importer.cs" />
     <Compile Include="Services\MerchantService.cs" />
     <Compile Include="Services\StandardGoogleImporter.cs" />
