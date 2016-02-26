@@ -129,6 +129,7 @@
     </Compile>
     <Compile Include="Helpers\HMTLHelperExtensions.cs" />
     <Compile Include="Helpers\SessionHelper.cs" />
+    <Compile Include="Models\CatalogAdministration.cs" />
     <Compile Include="Models\CatalogueList.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -1619,6 +1620,8 @@
     <Content Include="Views\Country\Select.cshtml" />
     <Content Include="Views\Catalog\UploadCatalog.cshtml" />
     <Content Include="Views\Catalog\List.cshtml" />
+    <Content Include="Views\Catalog\Admin.cshtml" />
+    <Content Include="Views\Catalog\CatalogStatus.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xlns.Catalog.Core\Xlns.Catalog.Core.csproj">

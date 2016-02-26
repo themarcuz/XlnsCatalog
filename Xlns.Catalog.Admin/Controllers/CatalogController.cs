@@ -26,6 +26,20 @@ namespace Xlns.Catalog.Admin.Controllers
             return PartialView(merchantCatalogs);
         }
 
+        public ActionResult Admin(string Id)
+        {
+            var documentRepository = new DocumentRepository();
+            var catalogue = documentRepository.Load<Catalogue>(Id);
+            var merchant = documentRepository.Load<Merchant>(catalogue.MerchantId);
+            var catalogAdmin = new CatalogAdministration 
+            { 
+                Catalogue = catalogue,
+                Merchant = merchant
+            };
+            return View(catalogAdmin);
+        }
+
+
         [HttpPost]
         public ActionResult Create(Catalogue catalogue)
         {

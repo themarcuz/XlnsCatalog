@@ -1,0 +1,28 @@
+﻿@model Xlns.Catalog.Document.Model.CatalogStatus
+
+@{
+    var status = Model;
+    var statusClass = "label ";
+    switch (status)
+    {
+        case Xlns.Catalog.Document.Model.CatalogStatus.DRAFT:
+            statusClass += "label-plain";
+            break;
+        case Xlns.Catalog.Document.Model.CatalogStatus.QUALITY_ASSURANCE:
+            statusClass += "label-info";
+            break;
+        case Xlns.Catalog.Document.Model.CatalogStatus.APPROVED:
+            statusClass += "label-success";
+            break;
+        case Xlns.Catalog.Document.Model.CatalogStatus.LIVE:
+            statusClass += "label-primary";
+            break;
+        case Xlns.Catalog.Document.Model.CatalogStatus.REJECTED:
+            statusClass += "label-danger";
+            break;
+        default:
+            break;
+    }
+}
+<span class="@statusClass">@status</span>
+

@@ -38,30 +38,7 @@
                                 @catalogue.Name
                             </td>
                             <td>
-                                @{
-                        var statusClass = "label ";
-                        switch (catalogue.Status)
-                        {
-                            case Xlns.Catalog.Document.Model.CatalogStatus.DRAFT:
-                                statusClass += "label-plain";
-                                break;
-                            case Xlns.Catalog.Document.Model.CatalogStatus.QUALITY_ASSURANCE:
-                                statusClass += "label-info";
-                                break;
-                            case Xlns.Catalog.Document.Model.CatalogStatus.APPROVED:
-                                statusClass += "label-success";
-                                break;
-                            case Xlns.Catalog.Document.Model.CatalogStatus.LIVE:
-                                statusClass += "label-primary";
-                                break;
-                            case Xlns.Catalog.Document.Model.CatalogStatus.REJECTED:
-                                statusClass += "label-danger";
-                                break;
-                            default:
-                                break;
-                        }
-                                }
-                                <span class="@statusClass">@catalogue.Status</span>
+                                @Html.Partial("CatalogStatus", catalogue.Status)                                
                             </td>
                             <td>
                                 @catalogue.Created
@@ -72,7 +49,7 @@
                             <td class="text-right">
                                 <div>
                                     <button class="btn btn-outline btn-white btn-xs">View products</button>
-                                    <button class="btn btn-outline btn-white btn-xs">Edit</button>
+                                    @Html.ActionLink("Manage", "Admin", "Catalog", new { Id = catalogue.Id }, new { @class = "btn btn-outline btn-primary btn-xs" })
                                     <button class="btn btn-outline btn-success btn-xs">Analysis</button>
                                     @using (@Html.BeginForm("Delete", "Catalog", FormMethod.Post, new { style = "display:inline" }))
                                     {
