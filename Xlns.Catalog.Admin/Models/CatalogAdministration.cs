@@ -10,5 +10,6 @@ namespace Xlns.Catalog.Admin.Models
     {
         public Catalogue Catalogue { get; set; }
         public Merchant Merchant { get; set; }
+        public int ProductsNumber { get; set; }
     }
 }

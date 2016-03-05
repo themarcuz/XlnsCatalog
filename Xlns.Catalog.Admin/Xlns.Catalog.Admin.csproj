@@ -301,6 +301,7 @@
     <Content Include="Content\plugins\slick\fonts\slick.ttf" />
     <Content Include="Content\plugins\slick\fonts\slick.woff" />
     <Content Include="Content\bootstrap.min.css.map" />
+    <Content Include="Images\fb.profile.jpg" />
     <Content Include="locales\en.json" />
     <Content Include="locales\es.json" />
     <None Include="Properties\PublishProfiles\Inspinia.pubxml" />

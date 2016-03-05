@@ -15,14 +15,42 @@ namespace Xlns.Catalog.Admin.Controllers
 {
     public class CatalogController : Controller
     {
-
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
+
+        private IMerchantService _merchantService;        
+        public IMerchantService MerchantService
+        {
+            get
+            {
+                if (_merchantService == null)
+                    _merchantService = new MerchantService();
+                return _merchantService;
+            }
+            set
+            {
+                _merchantService = value;
+            }
+        }
+
+        /* private ICatalogService _catalogService;
+        public ICatalogService CatalogService
+        {
+            get
+            {
+                if (_catalogService == null)
+                    _catalogService = new CatalogService();
+                return _catalogService;
+            }
+            set
+            {
+                _catalogService = value;
+            }
+        }  */
 
         public ActionResult List(string merchantId)
         {
             var merchantCatalogs = new CatalogueList { MerchantId = merchantId };
-            var catalogService = new CatalogService();
-            merchantCatalogs.Catalogs = catalogService.GetMerchantsCatalogues(merchantId);
+            merchantCatalogs.Catalogs = MerchantService.GetCatalogues(merchantId);
             return PartialView(merchantCatalogs);
         }
 
@@ -31,10 +59,12 @@ namespace Xlns.Catalog.Admin.Controllers
             var documentRepository = new DocumentRepository();
             var catalogue = documentRepository.Load<Catalogue>(Id);
             var merchant = documentRepository.Load<Merchant>(catalogue.MerchantId);
+
             var catalogAdmin = new CatalogAdministration 
             { 
                 Catalogue = catalogue,
-                Merchant = merchant
+                Merchant = merchant,
+                ProductsNumber = catalogue.GetProductsNumber()
             };
             return View(catalogAdmin);
         }
@@ -58,8 +88,7 @@ namespace Xlns.Catalog.Admin.Controllers
             var documentRepository = new DocumentRepository();
             var catalogue = documentRepository.Load<Catalogue>(catalogueId);
             var merchantId = catalogue.MerchantId;
-            var catalogService = new CatalogService();
-            var productDeleted = catalogService.DeleteCatalog(catalogueId);
+            var productDeleted = catalogue.DeleteCatalog();
             TempData.Add("notification",
                 new Notification
                 {
@@ -88,10 +117,8 @@ namespace Xlns.Catalog.Admin.Controllers
                 var importer = new StandardGoogleImporter();
                 var importResults = importer.DraftImport(file.InputStream, catalogue);
 
-                //var path = Path.Combine(Server.MapPath("~/App_Data/uploads"), fileName);
-                //file.SaveAs(path);
-                //var XmlDoc = XDocument.Load(new StreamReader(file.InputStream));
-                //var itemCount = XmlDoc.Element("rss").Element("channel").Elements("item").Count();
+                catalogue.Updated = DateTime.Now;
+                documentRepository.Save(catalogue);
 
                 TempData["importResult"] = importResults;
                 return RedirectToAction("ImportResult");

@@ -69,7 +69,7 @@ namespace Xlns.Catalog.Document.Services
                         Updated = DateTime.Now
                     };
 
-                    var stagingDocumentRepository = new StagingDocumentRepository(catalogue.CountryCode);
+                    var stagingDocumentRepository = new StagingDocumentRepository();
                     stagingDocumentRepository.Save(productItem);
                     importResult.Success++;
                 }

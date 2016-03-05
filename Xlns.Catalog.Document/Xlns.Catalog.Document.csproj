@@ -50,6 +50,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Index\ProductItems_ByCatalogueId.cs" />
     <Compile Include="Model\Catalogue.cs" />
     <Compile Include="Model\ImportResult.cs" />
     <Compile Include="Model\Merchant.cs" />

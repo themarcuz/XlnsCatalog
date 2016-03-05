@@ -7,6 +7,7 @@ using System.Web.Optimization;
 using System.Web.Routing;
 using Xlns.Catalog.Document.Repository;
 using Xlns.Catalog.Admin.Helpers;
+using Xlns.Catalog.Document.Model;
 
 namespace Xlns.Catalog.Admin
 {
@@ -22,7 +23,8 @@ namespace Xlns.Catalog.Admin
 
             //Initialize RavenDB Document Store
             DataDocumentStore.Initialize();
-            StagingDocumentStore.Initialize();            
+            StagingDocumentStore.Initialize();
+            CatalogDocumentStore.Initialize(); 
         }
 
         protected void Session_Start()

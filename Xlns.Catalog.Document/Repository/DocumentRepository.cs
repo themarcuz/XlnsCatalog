@@ -11,7 +11,7 @@ namespace Xlns.Catalog.Document.Repository
     public class DocumentRepository
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-               
+
         public virtual IDocumentSession OpenSession() 
         {
             return DataDocumentStore.Instance.OpenSession();
@@ -65,40 +65,27 @@ namespace Xlns.Catalog.Document.Repository
     public class StagingDocumentRepository : DocumentRepository, ICatalogRepository
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        protected string _countryId;
 
-        public StagingDocumentRepository(string countryId) : base() 
-        {
-            _countryId = countryId;
-        }
+        public IDocumentStore GetStore() { return StagingDocumentStore.Instance; }
 
         public override IDocumentSession OpenSession()
         {
-            return StagingDocumentStore.Instance.OpenSession(
-                new Raven.Client.Document.OpenSessionOptions
-                {
-                    Database = ConfigurationManager.AppSettings["StagingRavenDbName"].Replace("{countryId}", _countryId)
-                });
+            return StagingDocumentStore.Instance.OpenSession();
         }
+
+
+        
     }
 
     public class CatalogDocumentRepository : DocumentRepository, ICatalogRepository
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
-        protected string _countryId;
 
-        public CatalogDocumentRepository(string countryId) : base()
-        {
-            _countryId = countryId;
-        }
+        public IDocumentStore GetStore() { return CatalogDocumentStore.Instance; }
 
         public override IDocumentSession OpenSession()
         {
-            return DataDocumentStore.Instance.OpenSession(
-                new Raven.Client.Document.OpenSessionOptions
-                {
-                    Database = ConfigurationManager.AppSettings["CatalogRavenDbName"].Replace("{countryId}", _countryId)
-                });
+            return CatalogDocumentStore.Instance.OpenSession();
         }
     }   
 
