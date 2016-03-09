@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Raven.Abstractions.Data;
 using Raven.Client;
 using Raven.Client.Indexes;
+using Xlns.Catalog.Document.Exceptions;
 using Xlns.Catalog.Document.Index;
 using Xlns.Catalog.Document.Model;
 using Xlns.Catalog.Document.Repository;
@@ -17,7 +18,7 @@ namespace Xlns.Catalog.Document.Services
         DocumentRepository DocumentRepository { get; set; }
         int DeleteCatalog(Catalogue catalog);
         int DeleteProducts(Catalogue catalog);
-        IList<ProductItem> GetAllProducts(Catalogue catalog);
+        IList<ProductItem> GetProducts(Catalogue catalog, ProductsFilter filter);
         int GetProductsNumber(Catalogue catalog);
     }
 
@@ -41,7 +42,7 @@ namespace Xlns.Catalog.Document.Services
         public static int GetProductsNumber(this Catalogue catalog) { return CatalogService.GetProductsNumber(catalog); }
         public static int DeleteCatalog(this Catalogue catalog) { return CatalogService.DeleteCatalog(catalog); }
         public static int DeleteProducts(this Catalogue catalog) { return CatalogService.DeleteProducts(catalog); }
-        public static IList<ProductItem> GetAllProducts(this Catalogue catalog) { return CatalogService.GetAllProducts(catalog); }
+        public static IList<ProductItem> GetProducts(this Catalogue catalog, ProductsFilter filter) { return CatalogService.GetProducts(catalog, filter); }
 
     }
 
@@ -108,12 +109,17 @@ namespace Xlns.Catalog.Document.Services
             return productsNumber;
         }
 
-        public IList<ProductItem> GetAllProducts(Catalogue catalog)
+        public IList<ProductItem> GetProducts(Catalogue catalog, ProductsFilter filter)
         {
+            if (filter == null) throw new FilterNotSetException();
             var catalogRepository = GetCatalogRepository(catalog);
             using (IDocumentSession session = catalogRepository.OpenSession())
             {
-                var products = session.Query<ProductItem>().Where(p => p.CatalogueId == catalog.Id).ToList();
+                var products = session.Query<ProductItem>()
+                    .Where(p => p.CatalogueId == catalog.Id)
+                    .Skip(filter.MaxPageSize * (filter.PageNumber -1))
+                    .Take(filter.MaxPageSize)
+                    .ToList();
                 return products;
             }
         }

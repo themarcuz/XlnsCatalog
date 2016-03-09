@@ -50,11 +50,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Exceptions\Exceptions.cs" />
     <Compile Include="Index\ProductItems_ByCatalogueId.cs" />
     <Compile Include="Model\Catalogue.cs" />
+    <Compile Include="Model\ProductsFilter.cs" />
     <Compile Include="Model\ImportResult.cs" />
     <Compile Include="Model\Merchant.cs" />
     <Compile Include="Model\ProductItem.cs" />
+    <Compile Include="Model\ProductsList.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\DataDocumentStore.cs" />
     <Compile Include="Repository\DocumentRepository.cs" />

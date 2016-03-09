@@ -1,0 +1,32 @@
+﻿@model Xlns.Catalog.Document.Model.ProductsList
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>SKU</th>
+            <th>Title</th>
+            <th>Brand</th>
+            <th>Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model.Products)
+        {
+            <tr>
+                <td>
+                    <span>@product.SKU</span>
+                    <a target="_blank" href="@product.ProductLink" class="btn btn-primary btn-outline fa fa-external-link"></a>
+                </td>
+                <td>
+                    <span>@product.Title</span>
+                </td>
+                <td>
+                    <span>@product.Brand</span>
+                </td>
+                <td>
+                    <span>@product.Pricing.Price</span>
+                </td>                
+            </tr>   
+        }
+    </tbody>
+</table>
