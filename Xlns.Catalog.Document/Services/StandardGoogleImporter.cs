@@ -91,7 +91,7 @@ namespace Xlns.Catalog.Document.Services
         private decimal ExtractPriceValue(string price)
         {
             //TODO: testare questo metodo!
-            Regex regex = new Regex(@"^-?\d+(?:\.\d+)?");
+            Regex regex = new Regex(@"^-?\d+(?:,\d+)?");
             Match match = regex.Match(price);
             if (match.Success)
             {

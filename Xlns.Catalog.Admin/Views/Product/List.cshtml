@@ -24,7 +24,13 @@
                     <span>@product.Brand</span>
                 </td>
                 <td>
-                    <span>@product.Pricing.Price</span>
+                    @if (product.Pricing != null && product.Pricing.Price != product.Pricing.SalePrice)
+                    {
+                        <s class="small">@product.Pricing.Price</s> <strong class="text-danger">@product.Pricing.SalePrice</strong>
+                    } else
+                    {
+                        <span>@product.Pricing.Price</span>
+                    }
                 </td>                
             </tr>   
         }
