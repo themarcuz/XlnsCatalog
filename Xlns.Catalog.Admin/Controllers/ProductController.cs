@@ -17,7 +17,7 @@ namespace Xlns.Catalog.Admin.Controllers
         {
             var documentRepository = new DocumentRepository();
             var catalogue = documentRepository.Load<Catalogue>(catalogueId);
-            var products = catalogue.GetProducts(new ProductsFilter(20, 1));
+            var products = catalogue.GetProducts(new ProductsFilter(1000, 1));
             var productsList = new ProductsList { Products = products };
             return PartialView(productsList);
         }

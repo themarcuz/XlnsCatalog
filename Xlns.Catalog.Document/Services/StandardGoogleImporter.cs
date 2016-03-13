@@ -13,7 +13,7 @@ using Xlns.Catalog.Document.Repository;
 
 namespace Xlns.Catalog.Document.Services
 {
-    public class StandardGoogleImporter : IImporter
+    public class StandardGoogleImporter : ICatalogImporter
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
@@ -82,12 +82,7 @@ namespace Xlns.Catalog.Document.Services
             //TODO: salvare l'importResult anche sul documento del catalogo in staging
             return importResult;
         }
-
-        public Model.AnalysisResult MakeAnalysis(Catalogue catalogue)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         private decimal ExtractPriceValue(string price)
         {
             //TODO: testare questo metodo!

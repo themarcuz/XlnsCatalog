@@ -1,0 +1,87 @@
+﻿@{
+    ViewBag.Title = "Google Taxonomy";
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Google Taxonomy settings</h2>
+        <ol class="breadcrumb">
+            <li>
+                <a href="@Url.Action("Index", "Dashboard")">Home</a>
+            </li>
+            <li>Settings
+            </li>
+            <li class="active">
+                <strong>Google Taxonomy settings</strong>
+            </li>
+        </ol>
+    </div>
+</div>
+
+@{
+    Xlns.Catalog.Document.Model.ImportResult importResult = (Xlns.Catalog.Document.Model.ImportResult)TempData["importResult"];
+    if (importResult != null)
+    {
+    <div>
+        <h4>ImportResult</h4>
+        <dl class="dl-horizontal">
+            <dt>
+                @Html.DisplayNameFor(model => importResult.Success)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => importResult.Success)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => importResult.Failure)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => importResult.Failure)
+            </dd>
+
+        </dl>
+        @foreach (var detail in importResult.FailureDetails)
+        {
+            <p>@detail</p>
+        }
+    </div>
+    }
+    
+}
+
+<div class="row wrapper wrapper-content animated fadeInRight">
+    <fieldset class="form-horizontal">
+        @using (Html.BeginForm("UploadTaxonomy", "Settings", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {     
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="col-sm-4">
+                        @Html.Action("Select", "Country")
+                    </div>
+                    <div class=" col-sm-4">
+                        <div class="form-group input-group m-b">
+                            <span class="input-group-btn">
+                                <label title="Select Google taxonomy file" for="gTaxonomyFile" class="btn btn-primary">
+                                    <input type="file" name="gTaxonomyFile" id="gTaxonomyFile" class="hide" onchange="fileSelected(this);">
+                                    Select Google taxonomy file
+                                </label>
+                            </span>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <input class="btn btn-primary" type="submit" value="Upload Taxonomy" />
+                    </div>
+                </div>
+            </div>                
+        }
+    </fieldset>
+</div>
+
+<script type="text/javascript">
+    function fileSelected(elem) {
+        $(elem).parent().parent().nextAll('input').val($(elem).val().match(/[^\/\\]+$/));
+    };
+</script>

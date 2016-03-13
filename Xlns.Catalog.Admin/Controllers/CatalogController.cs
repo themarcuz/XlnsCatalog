@@ -118,6 +118,7 @@ namespace Xlns.Catalog.Admin.Controllers
                 var importResults = importer.DraftImport(file.InputStream, catalogue);
 
                 catalogue.Updated = DateTime.Now;
+                catalogue.Status = CatalogStatus.QUALITY_ASSURANCE;
                 documentRepository.Save(catalogue);
 
                 TempData["importResult"] = importResults;

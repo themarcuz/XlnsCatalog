@@ -33,7 +33,13 @@
             </li>
             <li class="@Html.IsSelected(controller:"Task", action: "Index")">
                 <a href="@Url.Action("Index", "Catalog")"><i class="fa fa-shopping-cart"></i> <span class="nav-label">Catalog</span> </a>
-            </li>                 
+            </li>
+            <li class="@Html.IsSelected(controller: "Settings")">
+                <a href="#"><i class="fa fa-cogs"></i> <span class="nav-label" data-i18n="nav.graphs">Settings</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse @Html.IsSelected(controller: "Settings", cssClass: "in")">
+                    <li class="@Html.IsSelected(action: "Google")"><a href="@Url.Action("Google", "Settings")"><i class="fa fa-google"></i>Google Taxonomy</a></li>                    
+                </ul>
+            </li>               
         </ul>
     </div>
 </nav>

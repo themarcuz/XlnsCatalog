@@ -56,7 +56,7 @@
                         <div class="col-lg-7" id="cluster_info">
                             <dl class="dl-horizontal">
                                 <dt>Created by:</dt>
-                                <dd> - </dd>
+                                <dd>- </dd>
                                 <dt>Last Updated:</dt>
                                 <dd>@catalog.Updated.ToString("dd-MM-yyyy hh:mm:ss")</dd>
                                 <dt>Created:</dt>
@@ -85,8 +85,8 @@
                                 <div class="panel-heading">
                                     <div class="panel-options">
                                         <ul class="nav nav-tabs">
-                                            <li class="active"><a href="#tabproducts" data-toggle="tab">Products preview</a></li>
-                                            <li ><a href="#tabsettings" data-toggle="tab">Datafeed settings</a></li>                                           
+                                            <li class="active"><a href="#tabproducts" data-toggle="tab">Products preview (1000 items)</a></li>
+                                            <li><a href="#tabsettings" data-toggle="tab">Datafeed settings</a></li>
                                         </ul>
                                     </div>
                                 </div>
@@ -103,7 +103,7 @@
                                                     <div class="tab-content ">
                                                         <div id="tabFileUpload" class="tab-pane active">
                                                             <div class="panel-body">
-                                                                @Html.Partial("UploadCatalog", catalog) 
+                                                                @Html.Partial("UploadCatalog", catalog)
                                                             </div>
                                                         </div>
                                                         <div id="tabFtp" class="tab-pane">
@@ -159,3 +159,37 @@
     </div>
 </div>
 
+@section Styles {
+    @Styles.Render("~/Content/plugins/dataTables/dataTablesStyles")
+}
+
+@section scripts {    
+    @Scripts.Render("~/plugins/dataTables")
+
+    <script type="text/javascript">        
+        $(document).ready(function () {
+            $('#tabproducts > table').DataTable({
+                dom: '<"html5buttons"B>lTfgtp',
+                buttons: [
+                    { extend: 'copy' },
+                    { extend: 'csv' },
+                    { extend: 'excel', title: 'ExampleFile' },
+                    { extend: 'pdf', title: 'ExampleFile' },
+
+                    {
+                        extend: 'print',
+                        customize: function (win) {
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
+
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                        }
+                    }
+                ]
+
+            });            
+        });
+    </script>
+}

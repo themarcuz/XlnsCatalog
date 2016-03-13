@@ -28,6 +28,7 @@ namespace Xlns.Catalog.Document.Model
         public Country Country { get; set; }
         public PricingInfo Pricing { get; set; }
         public string GoogleProductCategory { get; set; }
+        public string GoogleTaxonomy { get; set; }
         public Gender Gender { get; set; }
         public Age Age { get; set; }
         public string Color { get; set; }

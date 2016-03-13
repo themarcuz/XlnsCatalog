@@ -8,13 +8,9 @@ using Xlns.Catalog.Document.Model;
 
 namespace Xlns.Catalog.Document.Services
 {
-    public interface IImporter 
+    public interface ICatalogImporter 
     {
-        Model.ImportResult DraftImport(Stream originalFile, Catalogue catalogue);
-        Model.AnalysisResult MakeAnalysis(Catalogue catalogue);
+        Model.ImportResult DraftImport(Stream originalFile, Catalogue catalogue);        
     }
-
-    public abstract class Importer
-    {
-    }
+ 
 }

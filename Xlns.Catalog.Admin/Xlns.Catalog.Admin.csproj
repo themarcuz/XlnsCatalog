@@ -125,6 +125,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\MerchantController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
+    <Compile Include="Controllers\SettingsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -1625,6 +1626,7 @@
     <Content Include="Views\Catalog\Admin.cshtml" />
     <Content Include="Views\Catalog\CatalogStatus.cshtml" />
     <Content Include="Views\Product\List.cshtml" />
+    <Content Include="Views\Settings\Google.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xlns.Catalog.Core\Xlns.Catalog.Core.csproj">
