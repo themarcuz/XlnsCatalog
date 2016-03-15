@@ -33,16 +33,20 @@ namespace Xlns.Catalog.Document.Services
         {
             var result = new ImportResult();
             var documentRepository = new DocumentRepository();
+            var lineNumber = 0;
             using (var reader = new StreamReader(originalFile))
             {
                 do
                 {
+                    lineNumber++;
                     try
                     {
                         string textLine = reader.ReadLine();
+                        logger.Trace("Processing line: {0}", lineNumber);
                         string id = string.Empty;
                         var taxonomy = ParseLine(textLine, out id);
-                        if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(taxonomy))
+                        int temp;
+                        if (!string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(taxonomy) && int.TryParse(id, out temp))
                         {
                             var gtItem = documentRepository.Load<GoogleTaxonomyItem>(id);
                             if (gtItem == null) gtItem = new GoogleTaxonomyItem(id);
@@ -58,12 +62,18 @@ namespace Xlns.Catalog.Document.Services
                             }
                             documentRepository.Save(gtItem);
                             result.Success++;
+                            logger.Trace("Line {0} successfully processed", lineNumber);
+                        }
+                        else 
+                        {
+                            result.Failure++;
+                            logger.Trace("Error occurred on line {0}", lineNumber);
                         }
                     }
                     catch (Exception ex)
                     {
                         result.Failure++;
-                        result.FailureDetails.Add(ex.Message);
+                        result.FailureDetails.Add(string.Format("Error occurred on line {0} : {1}",lineNumber, ex.Message));
                     }
                 } while (reader.Peek() != -1);
                 reader.Close();
