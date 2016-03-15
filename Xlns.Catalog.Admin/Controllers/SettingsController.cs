@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using Xlns.Catalog.Admin.Models;
 using Xlns.Catalog.Document.Model;
 using Xlns.Catalog.Document.Repository;
 using Xlns.Catalog.Document.Services;
@@ -16,8 +17,9 @@ namespace Xlns.Catalog.Admin.Controllers
 
         public ActionResult Google()
         {
-
-            return View();
+            var gto = new GoogleTaxonomyOverview();
+            gto.ImportedCountries = GoogleTaxonomy.GetImportedCountries();
+            return View(gto);
         }
 
         [HttpPost]

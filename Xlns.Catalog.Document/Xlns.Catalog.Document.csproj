@@ -51,7 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Exceptions\Exceptions.cs" />
-    <Compile Include="Index\ProductItems_ByCatalogueId.cs" />
+    <Compile Include="Index\Indexes.cs" />
     <Compile Include="Model\Catalogue.cs" />
     <Compile Include="Model\GoogleTaxonomyItem.cs" />
     <Compile Include="Model\ProductsFilter.cs" />

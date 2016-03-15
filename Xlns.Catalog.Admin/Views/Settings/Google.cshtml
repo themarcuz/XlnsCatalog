@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Xlns.Catalog.Admin.Models.GoogleTaxonomyOverview
+
+@{
     ViewBag.Title = "Google Taxonomy";
 }
 
@@ -17,6 +19,8 @@
         </ol>
     </div>
 </div>
+
+
 
 @{
     Xlns.Catalog.Document.Model.ImportResult importResult = (Xlns.Catalog.Document.Model.ImportResult)TempData["importResult"];
@@ -50,32 +54,43 @@
     }
     
 }
+<div class="wrapper wrapper-content animated fadeInRight">
+    <h4>
+        Taxonomies in the system
+    </h4>
+    @if (Model.ImportedCountries == null || Model.ImportedCountries.Count == 0) 
+    {
+        <strong>None</strong> 
+    }
+    @foreach (var country in Model.ImportedCountries)
+    {
+        <p>@country.CountryCode : @country.Count</p>   
+    }    
+</div>
 
 <div class="row wrapper wrapper-content animated fadeInRight">
     <fieldset class="form-horizontal">
         @using (Html.BeginForm("UploadTaxonomy", "Settings", FormMethod.Post, new { enctype = "multipart/form-data" }))
-        {     
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="col-sm-4">
-                        @Html.Action("Select", "Country")
-                    </div>
-                    <div class=" col-sm-4">
-                        <div class="form-group input-group m-b">
-                            <span class="input-group-btn">
-                                <label title="Select Google taxonomy file" for="gTaxonomyFile" class="btn btn-primary">
-                                    <input type="file" name="gTaxonomyFile" id="gTaxonomyFile" class="hide" onchange="fileSelected(this);">
-                                    Select Google taxonomy file
-                                </label>
-                            </span>
-                            <input type="text" class="form-control">
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <input class="btn btn-primary" type="submit" value="Upload Taxonomy" />
+        {   
+            <div class="col-sm-12">
+                <div class="col-sm-4">
+                    @Html.Action("Select", "Country")
+                </div>
+                <div class=" col-sm-4">
+                    <div class="form-group input-group m-b">
+                        <span class="input-group-btn">
+                            <label title="Select Google taxonomy file" for="gTaxonomyFile" class="btn btn-primary">
+                                <input type="file" name="gTaxonomyFile" id="gTaxonomyFile" class="hide" onchange="fileSelected(this);">
+                                Select Google taxonomy file
+                            </label>
+                        </span>
+                        <input type="text" class="form-control">
                     </div>
                 </div>
-            </div>                
+                <div class="col-sm-4">
+                    <input class="btn btn-primary" type="submit" value="Upload Taxonomy" />
+                </div>
+            </div>            
         }
     </fieldset>
 </div>

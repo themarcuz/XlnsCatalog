@@ -31,7 +31,7 @@ namespace Xlns.Catalog.Document.Repository
             instance = new DocumentStore { ConnectionStringName = "RavenDB" };
             instance.Conventions.IdentityPartsSeparator = "-";
             instance.Initialize();
-
+            IndexCreation.CreateIndexes(typeof(GoogleTaxonomyItem_GroupCountries).Assembly, instance);            
         }
     }
 

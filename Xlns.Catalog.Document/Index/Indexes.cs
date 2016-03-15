@@ -19,4 +19,16 @@ namespace Xlns.Catalog.Document.Index
                            };
         }
     }
+
+    public class GoogleTaxonomyItem_GroupCountries : AbstractIndexCreationTask<GoogleTaxonomyItem, GoogleCountryTaxonomyGrouped>
+    {        
+
+        public GoogleTaxonomyItem_GroupCountries()
+        {
+            Map = gti => gti.SelectMany(i => i.Taxonomies, (i, t) => new { CountryCode = t.CountryCode, Count = 1 });
+
+            Reduce = results => results.GroupBy(r => r.CountryCode).Select(x => new { CountryCode = x.Key, Count = x.Sum(t => t.Count) });
+            
+        }
+    }
 }

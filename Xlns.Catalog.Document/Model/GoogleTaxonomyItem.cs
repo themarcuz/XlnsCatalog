@@ -27,9 +27,15 @@ namespace Xlns.Catalog.Document.Model
         }
     }
 
-    public struct GoogleCountryTaxonomy 
+    public class GoogleCountryTaxonomy 
     {
         public string CountryCode;
         public string Taxonomy;
+    }
+
+    public class GoogleCountryTaxonomyGrouped
+    {
+        public string CountryCode { get; set; }
+        public int Count { get; set; }
     }
 }
