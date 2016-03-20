@@ -134,6 +134,7 @@
     <Compile Include="Models\CatalogAdministration.cs" />
     <Compile Include="Models\CatalogueList.cs" />
     <Compile Include="Models\GoogleTaxonomyOverview.cs" />
+    <Compile Include="Models\MerchantDetail.cs" />
     <Compile Include="Models\Notification.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

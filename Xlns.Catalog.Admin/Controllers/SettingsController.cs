@@ -15,6 +15,21 @@ namespace Xlns.Catalog.Admin.Controllers
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        private IGoogleTaxonomy _googleTaxonomy;
+        public IGoogleTaxonomy GoogleTaxonomy
+        {
+            get
+            {
+                if (_googleTaxonomy == null)
+                    _googleTaxonomy = new GoogleTaxonomy();
+                return _googleTaxonomy;
+            }
+            set
+            {
+                _googleTaxonomy = value;
+            }
+        } 
+
         public ActionResult Google()
         {
             var gto = new GoogleTaxonomyOverview();

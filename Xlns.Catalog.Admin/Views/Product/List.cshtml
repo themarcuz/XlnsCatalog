@@ -5,6 +5,7 @@
         <tr>
             <th>SKU</th>
             <th>Title</th>
+            <th>Category</th>
             <th>Brand</th>
             <th>Price</th>
         </tr>
@@ -14,11 +15,14 @@
         {
             <tr>
                 <td>
-                    <span>@product.SKU</span>
-                    <a target="_blank" href="@product.ProductLink" class="btn btn-primary btn-outline fa fa-external-link"></a>
+                    
+                    <a target="_blank" href="@product.ProductLink" >@product.SKU</a>
                 </td>
                 <td>
                     <span>@product.Title</span>
+                </td>
+                <td>
+                    <span>@product.GoogleTaxonomy</span>
                 </td>
                 <td>
                     <span>@product.Brand</span>

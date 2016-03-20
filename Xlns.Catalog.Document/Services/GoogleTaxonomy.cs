@@ -11,11 +11,19 @@ using Xlns.Catalog.Document.Repository;
 
 namespace Xlns.Catalog.Document.Services
 {
-    public class GoogleTaxonomy
+
+    public interface IGoogleTaxonomy
+    {
+        System.Collections.Generic.IList<GoogleCountryTaxonomyGrouped> GetImportedCountries();
+        string GetTaxonomy(string googleTaxonomyId, string countryCode);
+        ImportResult Import(Stream originalFile, string countryCode);
+    }
+
+    public class GoogleTaxonomy : IGoogleTaxonomy
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
-        public static IList<GoogleCountryTaxonomyGrouped> GetImportedCountries()
+        public IList<GoogleCountryTaxonomyGrouped> GetImportedCountries()
         {
             var documentRepository = new DocumentRepository();
 
@@ -29,7 +37,7 @@ namespace Xlns.Catalog.Document.Services
             }
         }
 
-        public static ImportResult Import(Stream originalFile, string countryCode)
+        public ImportResult Import(Stream originalFile, string countryCode)
         {
             var result = new ImportResult();
             var documentRepository = new DocumentRepository();
@@ -73,7 +81,7 @@ namespace Xlns.Catalog.Document.Services
                     catch (Exception ex)
                     {
                         result.Failure++;
-                        result.FailureDetails.Add(string.Format("Error occurred on line {0} : {1}",lineNumber, ex.Message));
+                        result.FailureDetails.Add(string.Format("Error occurred on line {0} : {1}", lineNumber, ex.Message));
                     }
                 } while (reader.Peek() != -1);
                 reader.Close();
@@ -81,7 +89,31 @@ namespace Xlns.Catalog.Document.Services
             return result;
         }
 
-        private static string ParseLine(string line, out string Id)
+        public string GetTaxonomy(string googleTaxonomyId, string countryCode) 
+        {
+            logger.Trace("Requested taxonomy translation for CategoryId = {0} and country {1}", googleTaxonomyId, countryCode);
+            if (string.IsNullOrEmpty(googleTaxonomyId)) return string.Empty;            
+            var documentRepository = new DocumentRepository();
+            using (IDocumentSession session = documentRepository.OpenSession())
+            {
+                var taxonomyItem = session.Load<GoogleTaxonomyItem>(googleTaxonomyId);
+                if (taxonomyItem == null || taxonomyItem.Taxonomies == null) 
+                {
+                    logger.Warn("Taxonomies not found for id = {0}", googleTaxonomyId);
+                    return string.Empty;
+                }
+                var countryTaxonomy = taxonomyItem.Taxonomies.FirstOrDefault(t => t.CountryCode == countryCode);
+                if (countryTaxonomy == null) 
+                {
+                    logger.Warn("Taxonomy not found for id = {0} and country {0} ", googleTaxonomyId, countryCode);
+                    return string.Empty;
+                }
+                logger.Trace("Taxonomy translation found: {0}", countryTaxonomy.Taxonomy);
+                return countryTaxonomy.Taxonomy;
+            }
+        }
+
+        private string ParseLine(string line, out string Id)
         {
             int sepIndex = line.IndexOf("-");
             Id = line.Substring(0, sepIndex - 1);

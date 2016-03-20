@@ -1,4 +1,5 @@
 ﻿@model Xlns.Catalog.Admin.Models.CatalogueList
+@using Xlns.Catalog.Document.Services
 
 <div class="ibox">
     <div class="ibox-title">
@@ -22,6 +23,7 @@
                         <th data-toggle="true">Country</th>
                         <th data-hide="phone">Catalog Name</th>
                         <th data-hide="all">Status</th>
+                        <th data-hide="all">Products</th>
                         <th data-hide="phone">Created</th>
                         <th data-hide="phone,tablet">Last update</th>
                         <th class="text-right" data-sort-ignore="true">Action</th>
@@ -39,6 +41,9 @@
                             </td>
                             <td>
                                 @Html.Partial("CatalogStatus", catalogue.Status)                                
+                            </td>
+                            <td>
+                                @catalogue.GetProductsNumber()
                             </td>
                             <td>
                                 @catalogue.Created

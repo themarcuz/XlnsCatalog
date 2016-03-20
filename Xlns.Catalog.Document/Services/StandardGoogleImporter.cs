@@ -17,6 +17,21 @@ namespace Xlns.Catalog.Document.Services
     {
         private static NLog.Logger logger = NLog.LogManager.GetCurrentClassLogger();
 
+        private IGoogleTaxonomy _googleTaxonomy;
+        public IGoogleTaxonomy GoogleTaxonomy
+        {
+            get
+            {
+                if (_googleTaxonomy == null)
+                    _googleTaxonomy = new GoogleTaxonomy();
+                return _googleTaxonomy;
+            }
+            set
+            {
+                _googleTaxonomy = value;
+            }
+        } 
+
         public ImportResult DraftImport(Stream originalFile, Catalogue catalogue)
         {
             var documentRepository = new DocumentRepository();
@@ -40,6 +55,7 @@ namespace Xlns.Catalog.Document.Services
                         Description = item.Element("description").Value,                        
                         Gender = TranslateGender(item.Element(g + "gender").Value),
                         GoogleProductCategory = item.Element(g + "google_product_category").Value,
+                        GoogleTaxonomy = GoogleTaxonomy.GetTaxonomy(item.Element(g + "google_product_category").Value, catalogue.CountryCode),
                         AdditionalImageLinks = item.Elements(g + "additional_image_link").Select(el => el.Value).ToList(),
                         Id = string.Format("{0}__{1}", catalogue.Id, item.Element(g + "id").Value),
                         MainImageLink = item.Element(g + "image_link").Value,
@@ -81,7 +97,7 @@ namespace Xlns.Catalog.Document.Services
             }
             //TODO: salvare l'importResult anche sul documento del catalogo in staging
             return importResult;
-        }
+        }       
         
         private decimal ExtractPriceValue(string price)
         {

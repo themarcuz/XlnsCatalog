@@ -1,8 +1,8 @@
-﻿@model Xlns.Catalog.Document.Model.Merchant
+﻿@model Xlns.Catalog.Admin.Models.MerchantDetail
 
 @{
     ViewBag.Title = "Detail";
-    var merchant = Model;
+    var merchant = Model.Merchant;
 }
 
 <div class="row wrapper border-bottom white-bg page-heading">
@@ -26,17 +26,17 @@
     <div class="row m-t-xs">
         <div class="col-md-6">
             <div class="profile-image">
-                <img src="@Model.LogoUrl" class="m-b-md img-responsive" alt="logo">
+                <img src="@merchant.LogoUrl" class="m-b-md img-responsive" alt="logo">
             </div>
             <div class="profile-info">
                 <div class="">
                     <div>
-                        <h2 class="no-margins">@Model.Name</h2>
-                        <h4><a href="@Model.Url" target="_blank">@Model.Url</a>&nbsp;</h4>
-                        <p>@Model.Description&nbsp;</p>
-                        <p>@Model.Contact&nbsp;</p>
+                        <h2 class="no-margins">@merchant.Name</h2>
+                        <h4><a href="@merchant.Url" target="_blank">@merchant.Url</a>&nbsp;</h4>
+                        <p>@merchant.Description&nbsp;</p>
+                        <p>@merchant.Contact&nbsp;</p>
                         <p>
-                            @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-primary btn-xs" })
+                            @Html.ActionLink("Edit", "Edit", new { id = merchant.Id }, new { @class = "btn btn-primary btn-xs" })
 
                             @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-primary btn-xs" })
                         </p>
@@ -49,10 +49,10 @@
                 <tbody>
                     <tr>
                         <td>
-                            <strong>142</strong> Projects
+                            <strong>@Model.Stats.CataloguesNumber</strong> Catalogues
                         </td>
                         <td>
-                            <strong>22</strong> Followers
+                            <strong>@Model.Stats.ProductsNumber</strong> Products
                         </td>
 
                     </tr>
@@ -84,5 +84,5 @@
     </div>
 </div>
 
-@Html.Action("List", "Catalog", new { merchantId = Model.Id })
+@Html.Action("List", "Catalog", new { merchantId = merchant.Id })
 
