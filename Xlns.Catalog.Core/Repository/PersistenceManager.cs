@@ -81,8 +81,7 @@ namespace Xlns.Catalog.Core.Repository
         }
 
         public void Dispose()
-        {
-            
+        {            
             _SessionFactory.Close();
             _SessionFactory.Dispose();
         }

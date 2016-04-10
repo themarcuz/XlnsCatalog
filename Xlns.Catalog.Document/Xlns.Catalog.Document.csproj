@@ -53,9 +53,7 @@
     <Compile Include="Exceptions\Exceptions.cs" />
     <Compile Include="Index\Indexes.cs" />
     <Compile Include="Model\Catalogue.cs" />
-    <Compile Include="Model\GoogleTaxonomyItem.cs" />
     <Compile Include="Model\ProductsFilter.cs" />
-    <Compile Include="Model\ImportResult.cs" />
     <Compile Include="Model\Merchant.cs" />
     <Compile Include="Model\ProductItem.cs" />
     <Compile Include="Model\ProductsList.cs" />
@@ -65,7 +63,6 @@
     <Compile Include="Model\AnalysisResult.cs" />
     <Compile Include="Repository\ICatalogRepository.cs" />
     <Compile Include="Services\CatalogService.cs" />
-    <Compile Include="Services\GoogleTaxonomy.cs" />
     <Compile Include="Services\Importer.cs" />
     <Compile Include="Services\MerchantService.cs" />
     <Compile Include="Services\StandardGoogleImporter.cs" />

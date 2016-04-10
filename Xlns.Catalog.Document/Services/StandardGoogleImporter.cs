@@ -7,9 +7,10 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Xml.Linq;
-using Xlns.Catalog.Core.Model;
 using Xlns.Catalog.Document.Model;
 using Xlns.Catalog.Document.Repository;
+using Xlns.Catalog.Core.Service;
+using DTO = Xlns.Catalog.Core.DTO;
 
 namespace Xlns.Catalog.Document.Services
 {
@@ -32,12 +33,12 @@ namespace Xlns.Catalog.Document.Services
             }
         } 
 
-        public ImportResult DraftImport(Stream originalFile, Catalogue catalogue)
+        public DTO.ImportResult DraftImport(Stream originalFile, Catalogue catalogue)
         {
             var documentRepository = new DocumentRepository();
             var merchant = documentRepository.Load<Merchant>(catalogue.MerchantId);
             var XmlDoc = XDocument.Load(new StreamReader(originalFile));
-            var importResult = new ImportResult();
+            var importResult = new DTO.ImportResult();
             XNamespace g = "http://base.google.com/ns/1.0";
             foreach (var item in XmlDoc.Element("rss").Element("channel").Elements("item"))
             {
@@ -55,7 +56,7 @@ namespace Xlns.Catalog.Document.Services
                         Description = item.Element("description").Value,                        
                         Gender = TranslateGender(item.Element(g + "gender").Value),
                         GoogleProductCategory = item.Element(g + "google_product_category").Value,
-                        GoogleTaxonomy = GoogleTaxonomy.GetTaxonomy(item.Element(g + "google_product_category").Value, catalogue.CountryCode),
+                        GoogleTaxonomy = GoogleTaxonomy.GetTaxonomy(int.Parse(item.Element(g + "google_product_category").Value), catalogue.CountryCode),
                         AdditionalImageLinks = item.Elements(g + "additional_image_link").Select(el => el.Value).ToList(),
                         Id = string.Format("{0}__{1}", catalogue.Id, item.Element(g + "id").Value),
                         MainImageLink = item.Element(g + "image_link").Value,

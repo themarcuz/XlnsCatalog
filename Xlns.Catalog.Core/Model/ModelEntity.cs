@@ -17,5 +17,15 @@ namespace Xlns.Catalog.Core.Model
                 return this.Id == ((ModelEntity)obj).Id;
         }
 
+        public override int GetHashCode()
+        {
+            unchecked // Overflow is fine, just wrap
+            {
+                int hash = 17;
+                hash = hash * 23 + Id.GetHashCode();               
+                return hash;
+            }
+        }
+
     }
 }

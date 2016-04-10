@@ -6,7 +6,7 @@ using Xlns.Catalog.Document.Model;
 
 namespace Xlns.Catalog.Admin.Models
 {
-    public class CatalogAdministration
+    public class CatalogInfo
     {
         public Catalogue Catalogue { get; set; }
         public Merchant Merchant { get; set; }

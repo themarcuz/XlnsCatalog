@@ -133,6 +133,7 @@
     <Compile Include="Helpers\SessionHelper.cs" />
     <Compile Include="Models\CatalogAdministration.cs" />
     <Compile Include="Models\CatalogueList.cs" />
+    <Compile Include="Models\FullCatalog.cs" />
     <Compile Include="Models\GoogleTaxonomyOverview.cs" />
     <Compile Include="Models\MerchantDetail.cs" />
     <Compile Include="Models\Notification.cs" />
@@ -1629,6 +1630,7 @@
     <Content Include="Views\Catalog\CatalogStatus.cshtml" />
     <Content Include="Views\Product\List.cshtml" />
     <Content Include="Views\Settings\Google.cshtml" />
+    <Content Include="Views\Settings\TaxonomyTree.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Xlns.Catalog.Core\Xlns.Catalog.Core.csproj">

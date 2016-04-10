@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Xlns.Catalog.Document.Model
+namespace Xlns.Catalog.Core.DTO
 {
     public class ImportResult
     {

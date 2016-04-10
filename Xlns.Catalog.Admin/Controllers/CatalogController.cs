@@ -47,6 +47,12 @@ namespace Xlns.Catalog.Admin.Controllers
             }
         }  */
 
+        public ActionResult Index() 
+        {
+            var fullCatalog = new FullCatalog();
+            return View(fullCatalog);
+        }
+
         public ActionResult List(string merchantId)
         {
             var merchantCatalogs = new CatalogueList { MerchantId = merchantId };
@@ -60,7 +66,7 @@ namespace Xlns.Catalog.Admin.Controllers
             var catalogue = documentRepository.Load<Catalogue>(Id);
             var merchant = documentRepository.Load<Merchant>(catalogue.MerchantId);
 
-            var catalogAdmin = new CatalogAdministration 
+            var catalogAdmin = new CatalogInfo 
             { 
                 Catalogue = catalogue,
                 Merchant = merchant,

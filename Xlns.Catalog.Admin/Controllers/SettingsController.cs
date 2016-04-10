@@ -7,7 +7,7 @@ using System.Web.Mvc;
 using Xlns.Catalog.Admin.Models;
 using Xlns.Catalog.Document.Model;
 using Xlns.Catalog.Document.Repository;
-using Xlns.Catalog.Document.Services;
+using Xlns.Catalog.Core.Service;
 
 namespace Xlns.Catalog.Admin.Controllers
 {
@@ -54,6 +54,14 @@ namespace Xlns.Catalog.Admin.Controllers
                 return RedirectToAction("Google");
             }
             throw new FileNotFoundException("No valid file uploaded");
+        }
+
+        [HttpPost]
+        public ActionResult GenerateTaxonomyTree()
+        {
+            int rootNode = int.Parse(System.Configuration.ConfigurationManager.AppSettings["GoogleTaxonomyApparelRootNode"]);
+            var taxonomyTree = GoogleTaxonomy.CreateTaxonomyTree(rootNode);
+            return PartialView("TaxonomyTree", taxonomyTree);
         }
 	}
 }

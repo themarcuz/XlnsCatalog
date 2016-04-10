@@ -23,7 +23,7 @@
 
 
 @{
-    Xlns.Catalog.Document.Model.ImportResult importResult = (Xlns.Catalog.Document.Model.ImportResult)TempData["importResult"];
+    Xlns.Catalog.Core.DTO.ImportResult importResult = (Xlns.Catalog.Core.DTO.ImportResult)TempData["importResult"];
     if (importResult != null)
     {
     <div>
@@ -55,17 +55,16 @@
     
 }
 <div class="wrapper wrapper-content animated fadeInRight">
-    <h4>
-        Taxonomies in the system
+    <h4>Taxonomies in the system
     </h4>
-    @if (Model.ImportedCountries == null || Model.ImportedCountries.Count == 0) 
+    @if (Model.ImportedCountries == null || Model.ImportedCountries.Count == 0)
     {
         <strong>None</strong> 
     }
     @foreach (var country in Model.ImportedCountries)
     {
-        <p>@country.CountryCode : @country.Count</p>   
-    }    
+        <p>@country.CountryCode : @country.Value</p>   
+    }
 </div>
 
 <div class="row wrapper wrapper-content animated fadeInRight">
@@ -93,10 +92,56 @@
             </div>            
         }
     </fieldset>
+
 </div>
 
-<script type="text/javascript">
-    function fileSelected(elem) {
-        $(elem).parent().parent().nextAll('input').val($(elem).val().match(/[^\/\\]+$/));
-    };
-</script>
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <button id="btnGenerateTaxonomyTree" class="ladda-button btn btn-primary" data-style="zoom-in">Generate taxonomy tree</button>
+                </div>
+
+                <div id="taxonomyTreeContainer" class="ibox-content">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    @Styles.Render("~/plugins/laddaStyles")
+}
+
+@section Scripts {
+    @Scripts.Render("~/plugins/ladda")
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            //$('#btnGenerateTaxonomyTree').ladda('bind', { timeout: 2000 });
+            var l = $('#btnGenerateTaxonomyTree').ladda();
+            l.click(function () {
+                // Start loading
+                l.ladda('start');
+                $.ajax({
+                    method: "POST",
+                    url: "./GenerateTaxonomyTree",
+                    cache: false
+                }).done(function(partial) {
+                    l.ladda('stop');
+                    $("#taxonomyTreeContainer").html(partial);
+                 });                
+            });
+        });
+    </script>
+
+    <script type="text/javascript">
+        function fileSelected(elem) {
+            $(elem).parent().parent().nextAll('input').val($(elem).val().match(/[^\/\\]+$/));
+        };
+    </script>
+
+
+}
+
